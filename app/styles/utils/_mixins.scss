@@ -1,0 +1,18 @@
+@mixin css-prefix($property, $value) {
+  -webkit-#{$property}: #{$value};
+     -moz-#{$property}: #{$value};
+      -ms-#{$property}: #{$value};
+          #{$property}: #{$value};
+}
+
+@mixin icon($code) {
+  display: inline-block;
+  font: normal normal normal 14px/1 LegislationLabIcons;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  content: $code;
+}
+

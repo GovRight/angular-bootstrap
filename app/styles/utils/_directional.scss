@@ -1,0 +1,99 @@
+﻿// Adapted from directional-scss
+// directional-css author: Tyson Matanich (http://matanich.com), 2013 | License: MIT
+
+$dir: null;
+$left: null;
+$right: null;
+
+@function assert-valid-dir() {
+  @if $dir != 'ltr' and $dir != 'rtl' {
+    @error 'Invalid or missing $dir (#{$dir}). Directive outside @directional block?';
+  }
+  @return null;
+}
+
+@mixin directional {
+  // scss-lint:disable QualifyingElement
+
+  @if $dir != null {
+    @error 'Unexpected $dir (#{$dir}). Variable $dir should never be set!';
+  }
+
+  // LTR VERSION
+  $dir: ltr;
+  $left: left;
+  $right: right;
+  body.ltr & { @content; }
+
+  // RTL VERSION
+  $dir: rtl;
+  $left: right;
+  $right: left;
+  body.rtl & { @content; }
+
+  // Clear $dir, preventing all directional helper methods from
+  // working outside of a directional block
+  $dir: null;
+}
+
+@function if-ltr($if, $else: null) {
+  $assert: assert-valid-dir();
+
+  @if $dir != rtl {
+    @return $if;
+  } @else {
+    @return $else;
+  }
+}
+
+@function if-rtl($if, $else: null) {
+  $assert: assert-valid-dir();
+
+  @return if-ltr($else, $if);
+}
+
+@function side-values($values) {
+  $assert: assert-valid-dir();
+
+  @if $dir == rtl and length($values) >= 4 {
+    // Reorder right and left positions in list
+    @return nth($values, 1) nth($values, 4) nth($values, 3) nth($values, 2);
+  } @else {
+    @return $values;
+  }
+}
+
+@function corner-values($values) {
+  $assert: assert-valid-dir();
+
+  @if $dir == rtl and length($values) > 1 {
+    // Reorder right and left positions in list
+    @if length($values) == 2 {
+      @return nth($values, 2) nth($values, 1);
+    }
+    @else if length($values) == 3 {
+      @return nth($values, 2) nth($values, 1) nth($values, 2) nth($values, 3);
+    }
+    @else {
+      @return nth($values, 2) nth($values, 1) nth($values, 4) nth($values, 3);
+    }
+  } @else {
+    @return $values;
+  }
+}
+
+@mixin if-ltr {
+  $assert: assert-valid-dir();
+
+  @if $dir != rtl {
+    @content;
+  }
+}
+
+@mixin if-rtl {
+  $assert: assert-valid-dir();
+
+  @if $dir == rtl {
+    @content;
+  }
+}

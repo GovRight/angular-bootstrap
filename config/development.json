@@ -1,0 +1,15 @@
+{
+  "SiteConfig": {
+    "environment": "development",
+    "defaultLocale": "en",
+    "siteDomain": "localhost",
+    "authUrl": "http://localhost:3000/auth/facebook/login",
+    "contactUrl": "http://localhost:3000/contact",
+    "corpusUrl": "http://localhost:3000/api",
+    "facebook": {
+      "namespace": "legislation-lab-dev",
+      "appUrl": "http://-",
+      "shareByDefault": false
+    }
+  }
+}

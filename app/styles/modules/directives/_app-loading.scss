@@ -1,0 +1,58 @@
+app-loading {
+  position: fixed;
+  z-index: 999999;
+
+  .animated-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $dark-grey;
+    color: $white-2;
+    opacity: 1;
+
+    &.ng-leave {
+      transition: all 300ms ease-in;
+      opacity: 1;
+    }
+
+    &.ng-leave-active {
+      opacity: 0;
+		}
+
+    .messaging {
+      height: 100%;
+      margin: auto;
+      color: #fff;
+      font-size: 36px;
+      font-weight: 200;
+      line-height: 50px;
+
+      .info > div {
+        animation: pulsing 4s infinite;
+        &.delay1 { animation-delay: 1s; }
+        &.delay2 { animation-delay: 2s; }
+      }
+    }
+  }
+}
+
+@keyframes pulsing {
+  0% { text-shadow: 0; }
+  25% { text-shadow: 0 0 20px #fff; }
+  50% { text-shadow: 0; }
+  100% { text-shadow: 0; }
+}
+
+html.no-flexbox app-loading {
+  .messaging {
+    position: absolute;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -125px;
+    text-align: center;
+  }
+}

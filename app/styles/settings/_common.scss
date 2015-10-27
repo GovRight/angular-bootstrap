@@ -1,0 +1,25 @@
+
+$dark-grey: #3e3e3e;
+
+// light-blue-500 darkened substantially
+$dark-light-blue: #00223e;
+
+$black-1-5: rgba(0, 0, 0, .8);
+$fb-blue: #3b5998;
+
+$primary-color: $light-blue;
+$primary-color-1: $light-blue-300;
+$primary-color-2: $light-blue-800;
+
+$accent-color: $amber-400;
+$accent-color-1: $amber-300;
+$accent-color-2: $amber-800;
+
+// Extracted from angular-material's CSS
+$media-sm: '(max-width: 599px)';
+$media-gt-sm: '(min-width: 600px)';
+$media-md: '(min-width: 600px) and (max-width: 959px)';
+$media-gt-md: '(min-width: 960px)';
+$media-lg: '(min-width: 960px) and (max-width: 1199px)';
+$media-gt-lg: '(min-width: 1200px)';
+$media-mobile: #{$media-sm}, #{$media-md};

@@ -1,0 +1,15 @@
+{
+  "SiteConfig": {
+    "environment": "stage",
+    "defaultLocale": "en",
+    "siteDomain": "-",
+    "authUrl": "http://dev.corpus.govright.org/auth/facebook/login",
+    "contactUrl": "http://dev.corpus.govright.org/contact",
+    "corpusUrl": "http://dev.corpus.govright.org/api",
+    "facebook": {
+      "namespace": "legislation-lab-dev",
+      "appUrl": "http://-",
+      "shareByDefault": false
+    }
+  }
+}

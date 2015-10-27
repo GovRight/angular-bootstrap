@@ -1,0 +1,11 @@
+node_modules
+/dist
+.tmp
+.sass-cache
+test/bower_components
+.idea
+*.log
+.DS_Store
+# This file is auto-generated
+app/scripts/services/config.js
+.env
