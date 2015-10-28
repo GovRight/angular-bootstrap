@@ -1,5 +1,30 @@
+.update-your-browser {
+  display: none;
+  color: #fff;
+  font: 600 18px/26px "Open Sans",sans-serif;
+  padding: 25px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #d90000;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0,0,0,.75);
+  z-index: 1000001;
+  display: none;
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
 // Provided by Modernizr
 .no-flexbox {
+  .update-your-browser {
+    display: block;
+  }
 }
 
 // IE10 fixes due to broken flexbox support

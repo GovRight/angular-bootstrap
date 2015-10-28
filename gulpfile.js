@@ -1,14 +1,13 @@
 /*global -$ */
 'use strict';
 
-var ANGULAR_MODULE = 'example-app';
+var ANGULAR_MODULE = 'app';
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var modRewrite  = require('connect-modrewrite');
 var reload = browserSync.reload;
-var sitemap = require('./lib/sitemap');
 var seq = require('run-sequence');
 var path = require('path');
 
@@ -42,7 +41,8 @@ gulp.task('templates', function () {
       .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
       .pipe($.if('*.html', $.angularTemplatecache({
         root: '/templates/',
-        module: ANGULAR_MODULE
+        module: ANGULAR_MODULE + '.templates',
+        standalone: true
       })))
       .pipe(gulp.dest('.tmp/js'));
 });
@@ -100,7 +100,7 @@ gulp.task('iconfont', function() {
         .pipe($.consolidate('lodash', {
           glyphs: codepoints,
           fontName: 'IconFont',
-          fontFilename: ANGULAR_MODULE + '-lab-icons',
+          fontFilename: ANGULAR_MODULE + '-icons',
           fontPath: '/fonts',
           className: 'ico'
         }))

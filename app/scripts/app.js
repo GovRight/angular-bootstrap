@@ -1,15 +1,16 @@
 'use strict';
 
 (function() {
-  var ANGULAR_MODULE = '';
-
   angular
-    .module(ANGULAR_MODULE, [
-      ANGULAR_MODULE + '.config',
+    .module('app', [
+      'app.config',
+      'app.templates',
       'govrightCorpusServices',
       'LLServices',
       'ngMaterial',
-      'ngAnimate'
+      'ngAnimate',
+      'ui.router',
+      'ngLodash'
     ]).config([
       '$mdThemingProvider',
       function($mdThemingProvider) {
