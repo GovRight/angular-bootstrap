@@ -270,4 +270,149 @@
     }
   }
 })();
+
+
+/**
+ * @ngdoc object
+ * @name LLServices.LLLocale
+ * @header LLServices.LLLocale
+ * @object
+ *
+ * @description
+ *
+ * LLLocale? Looks kinda weird, I agree :|
+ * All the locale stuff you could ever imagine!
+ */
+(function() {
+  angular.module('LLServices')
+    .factory('LLLocale', Locale);
+
+  Locale.$inject = ['$rootScope', 'gettextCatalog'];
+
+  function Locale($rootScope, gettextCatalog) {
+    var DEFAULT_LOCALE_CODE = null;
+
+    function LocaleInstance(code, name, dir) {
+      this.code = code;
+      this.name = name;
+      this.dir = dir;
+
+      return this;
+    }
+
+    function syncLocale(locale) {
+      var oldCode = locale.code;
+
+      locale.code = gettextCatalog.getCurrentLanguage();
+      locale.name = gettextCatalog.getString('locale.name');
+      locale.dir = gettextCatalog.getString('locale.direction');
+
+      if (oldCode !== locale.code) {
+        $rootScope.$broadcast('locale:changed', locale);
+      }
+
+      return locale;
+    }
+
+    function determineLocaleCode(instance, localeCode, extendedLookup) {
+      if (!instance || !instance.locales) {
+        return null;
+      }
+
+      if(instance.locales[localeCode]) {
+        return localeCode;
+      } else {
+        var code = DEFAULT_LOCALE_CODE;
+        if(extendedLookup && !instance.locales[code]) {
+          code = Object.keys(instance.locales).shift();
+        }
+        if (!instance.locales[code]) {
+          return null;
+        } else {
+          return code;
+        }
+      }
+    }
+
+    return {
+      localeList: [],
+
+      current: syncLocale(new LocaleInstance()),
+
+      setCurrent: function(locale) {
+        gettextCatalog.setCurrentLanguage(locale);
+        return syncLocale(this.current);
+      },
+
+      setDefault: function(code) {
+        DEFAULT_LOCALE_CODE = code;
+      },
+
+      getString: function() {
+        return gettextCatalog.getString.apply(gettextCatalog, arguments);
+      },
+
+      lookupString: function (locale, string, n, context) {
+        // Adapted from gettextCatalog.getStringForm(...)
+        var stringTable = gettextCatalog.strings[locale] || {};
+        var contexts = stringTable[string] || {};
+        var plurals = contexts[context || '$$noContext'] || [];
+        return plurals[n || 0];
+      },
+
+      locales: function() {
+        return this.localeList.length ? this.localeList : Object.keys(gettextCatalog.strings).sort().map(function (code) {
+          var locale = new LocaleInstance(code);
+          locale.name = this.lookupString(code, 'locale.name');
+          locale.dir = this.lookupString(code, 'locale.direction');
+
+          return locale;
+        }, this);
+      },
+
+      isValid: function (locale) {
+        return locale && gettextCatalog.strings.hasOwnProperty(locale);
+      },
+
+      extract: function(target) {
+        if(!target || !target.locales) {
+          return {};
+        }
+
+        var code = this.current.code;
+        if (!target.locales[code]) {
+          code = DEFAULT_LOCALE_CODE;
+        }
+
+        return target.locales[code];
+      },
+
+      property: function(instance, key, extendedLookup) {
+        var localeCode = determineLocaleCode(instance, this.current.code, extendedLookup);
+        return localeCode ? instance.locales[localeCode][key] : null;
+      },
+
+      localeDir: function(instance) {
+        var localeCode = determineLocaleCode(instance, this.current.code, true);
+        return localeCode ? this.lookupString(localeCode, 'locale.direction') : null;
+      },
+
+      setLocales: function(codes) {
+        var locales = [];
+        Object.keys(gettextCatalog.strings).sort().map(function (code) {
+          if(codes.indexOf(code) > -1) {
+            var locale = new LocaleInstance(code);
+            locale.name = this.lookupString(code, 'locale.name');
+            locale.dir = this.lookupString(code, 'locale.direction');
+            locales.push(locale);
+          }
+        }, this);
+        this.localeList = locales;
+        $rootScope.$broadcast('locale:new-list');
+
+        return locales;
+      }
+    };
+  }
+}());
 })();
