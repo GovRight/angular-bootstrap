@@ -11,9 +11,9 @@ app-loading {
     background-color: $dark-grey;
     color: $white-2;
     opacity: 1;
+    transition: all 300ms ease-in;
 
     &.ng-leave {
-      transition: all 300ms ease-in;
       opacity: 1;
     }
 
