@@ -12,8 +12,8 @@ Follow [this guide](INSTALL.md) for initial project setup.
 
 ## Launch
 
-1. **Production:** set virtual host index to `dist` and start the backend ``npm run start:forever``
-2. **Local development:** ``npm run serve`` (runs the backend and local dev server)
+1. **Local development:** ``npm run serve`` (runs the backend and local dev server)
+2. **Production:** set virtual host index to `dist` and start the backend ``npm run start:forever``
 
 ## Useful commands
 
@@ -28,7 +28,7 @@ Follow [this guide](INSTALL.md) for initial project setup.
 ## Production deployment
 
 1. ``git pull``
-2. Relaunch the legislation lab backend if need: ``npm run reload``
+2. Relaunch the backend if need: ``npm run reload``
 4. Build dist: ``gulp``
 
 ## Localization Process
