@@ -1,3 +1,5 @@
+# Another awesome Angular project!
+
 ## Pre-reqs:
 
  - [Node.js](https://nodejs.org/) v0.12.x
