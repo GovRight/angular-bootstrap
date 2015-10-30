@@ -16,7 +16,7 @@
     "ng-lodash": "~0.2.0",
     "angular-gettext": "~2.0.2",
     "modernizr": "~2.8.3",
-    "angular-material": "~0.10.1"
+    "angular-material": ">=0.11"
   },
   "resolutions": {
     "angular": ">=1.3"
