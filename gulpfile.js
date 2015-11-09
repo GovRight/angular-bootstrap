@@ -25,7 +25,9 @@ gulp.task('styles', ['iconfont'], function () {
     ]))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
-    .pipe(reload({stream: true}));
+    .on('end', function() {
+      reload();
+    });
 });
 
 gulp.task('jshint', function () {

@@ -21,15 +21,28 @@ app-loading {
       opacity: 0;
     }
 
+    // Some basic flex settings to display the message
+    // in the center because it 'jumps' due to delayed
+    // material css or directives loading
     .messaging {
       height: 100%;
-      margin: auto;
+      width: 100%;
       color: #fff;
       font-size: 36px;
       font-weight: 200;
       line-height: 50px;
+      display: flex;
+      align-items: center;
+
+      .info {
+        display: flex;
+        flex: 1 100%;
+        flex-direction: row;
+        align-items: center;
+      }
 
       .info > div {
+        margin: 0 auto;
         animation: pulsing 4s infinite;
         &.delay1 { animation-delay: 1s; }
         &.delay2 { animation-delay: 2s; }
