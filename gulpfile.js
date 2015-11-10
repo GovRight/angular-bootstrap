@@ -304,10 +304,10 @@ gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras'], function () 
 });
 
 gulp.task('build:stage', ['clean', 'env:stage'], function() {
-  return seq('build', ['sitemap:stage', 'robots:stage']);
+  return seq('build', [/*'sitemap:stage', */'robots:stage']);
 });
 gulp.task('build:production', ['clean', 'env:production'], function() {
-  return seq('build', ['sitemap:production', 'robots:production']);
+  return seq('build', [/*'sitemap:production', */'robots:production']);
 });
 // Quick alias for production
 gulp.task('default', function () {
