@@ -101,7 +101,7 @@ gulp.task('iconfont', function() {
       gulp.src('app/styles/icon-font.css.tmpl')
         .pipe($.consolidate('lodash', {
           glyphs: codepoints,
-          fontName: 'IconFont',
+          fontName: 'AppIconFont',
           fontFilename: ANGULAR_MODULE + '-icons',
           fontPath: '/fonts',
           className: 'ico'

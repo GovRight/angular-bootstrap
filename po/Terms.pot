@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+# The display name of this locale
+msgid "locale.name"
+msgstr ""
+
+# Locale is RTL or LTR? Enter only 'rtl' or 'ltr'
+msgid "locale.direction"
+msgstr ""
