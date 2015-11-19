@@ -48,3 +48,8 @@ files. The workflow is as follows,
    Javascript files. These files are stored in app/translations/.
 5. During runtime, translations are matched with translation markers and rendered
    according to active locale.
+   
+## Apache config
+
+Check the document for details:
+`GovRight documentation` > `Manuals` > `How to configure Apache for AngularJS based projects`
