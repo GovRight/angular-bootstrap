@@ -18,7 +18,7 @@ app.post('/auth/success', function(req, res) {
 
 // LAUNCH
 var port = process.env.PORT || 3069;
-var appName = process.env.APP_NAME || 'Legislation Lab App';
+var appName = process.env.APP_NAME || 'Application';
 var server = app.listen(port, function () {
   console.log('%s backend running at http://localhost:%s', appName, port);
 });
