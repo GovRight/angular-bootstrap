@@ -42,36 +42,54 @@ module.factory(
 
         // INTERNAL. Use Law.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Law.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Law.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Law.nodes.findById() instead.
         "prototype$__findById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Law.nodes.destroyById() instead.
         "prototype$__destroyById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Law.nodes.updateById() instead.
         "prototype$__updateById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "PUT"
         },
@@ -166,6 +184,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Laws",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Law#createMany
+         * @methodOf govrightCorpusServices.Law
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Law` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Laws",
           method: "POST"
         },
@@ -512,6 +569,47 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Law#buildComparisonPackage
+         * @methodOf govrightCorpusServices.Law
+         *
+         * @description
+         *
+         * Makes up a diff of two laws.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `slug` – `{string}` - 
+         *
+         *  - `left` – `{string=}` - 
+         *
+         *  - `right` – `{string=}` - 
+         *
+         *  - `limit` – `{number=}` - 
+         *
+         *  - `skip` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Law` object.)
+         * </em>
+         */
+        "buildComparisonPackage": {
+          url: urlBase + "/Laws/compare",
+          method: "GET"
+        },
+
         // INTERNAL. Use Discussion.law() instead.
         "::get::Discussion::law": {
           url: urlBase + "/Discussions/:id/law",
@@ -661,15 +759,15 @@ module.factory(
 
     /**
      * @ngdoc object
-     * @name lbServices.Law.discussions
-     * @header lbServices.Law.discussions
+     * @name govrightCorpusServices.Law.discussions
+     * @header govrightCorpusServices.Law.discussions
      * @object
      * @description
      *
      * The object `Law.discussions` groups methods
      * manipulating `Discussion` instances related to `Law`.
      *
-     * Call {@link lbServices.Law#discussions Law.discussions()}
+     * Call {@link govrightCorpusServices.Law#discussions Law.discussions()}
      * to query all related instances.
      */
 
@@ -780,6 +878,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Law::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Law.discussions#createMany
+         * @methodOf govrightCorpusServices.Law.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Law::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -924,15 +1060,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Law.nodes
-     * @header lbServices.Law.nodes
+     * @name govrightCorpusServices.Law.nodes
+     * @header govrightCorpusServices.Law.nodes
      * @object
      * @description
      *
      * The object `Law.nodes` groups methods
      * manipulating `Node` instances related to `Law`.
      *
-     * Call {@link lbServices.Law#nodes Law.nodes()}
+     * Call {@link govrightCorpusServices.Law#nodes Law.nodes()}
      * to query all related instances.
      */
 
@@ -1043,6 +1179,44 @@ module.factory(
         R.nodes.create = function() {
           var TargetResource = $injector.get("Node");
           var action = TargetResource["::create::Law::nodes"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Law.nodes#createMany
+         * @methodOf govrightCorpusServices.Law.nodes
+         *
+         * @description
+         *
+         * Creates a new instance in nodes of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Node` object.)
+         * </em>
+         */
+        R.nodes.createMany = function() {
+          var TargetResource = $injector.get("Node");
+          var action = TargetResource["::createMany::Law::nodes"];
           return action.apply(R, arguments);
         };
 
@@ -1264,18 +1438,27 @@ module.factory(
 
         // INTERNAL. Use Discussion.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "PUT"
         },
@@ -1288,234 +1471,386 @@ module.factory(
 
         // INTERNAL. Use Discussion.moderators.findById() instead.
         "prototype$__findById__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.moderators.destroyById() instead.
         "prototype$__destroyById__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.moderators.updateById() instead.
         "prototype$__updateById__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.moderators.link() instead.
         "prototype$__link__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.moderators.unlink() instead.
         "prototype$__unlink__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.moderators.exists() instead.
         "prototype$__exists__moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "HEAD"
         },
 
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion#prototype$__get__site
+         * @methodOf govrightCorpusServices.Discussion
+         *
+         * @description
+         *
+         * Fetches belongsTo relation site.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        "prototype$__get__site": {
+          url: urlBase + "/Discussions/:id/site",
+          method: "GET"
+        },
+
         // INTERNAL. Use Discussion.votes.findById() instead.
         "prototype$__findById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.votes.destroyById() instead.
         "prototype$__destroyById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.votes.updateById() instead.
         "prototype$__updateById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.votes.link() instead.
         "prototype$__link__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.votes.unlink() instead.
         "prototype$__unlink__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.votes.exists() instead.
         "prototype$__exists__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.findById() instead.
         "prototype$__findById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.nodes.destroyById() instead.
         "prototype$__destroyById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.nodes.updateById() instead.
         "prototype$__updateById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.link() instead.
         "prototype$__link__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.unlink() instead.
         "prototype$__unlink__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.nodes.exists() instead.
         "prototype$__exists__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.versions.findById() instead.
         "prototype$__findById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.versions.destroyById() instead.
         "prototype$__destroyById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.versions.updateById() instead.
         "prototype$__updateById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.versions.link() instead.
         "prototype$__link__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.versions.unlink() instead.
         "prototype$__unlink__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.versions.exists() instead.
         "prototype$__exists__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.comparisons.findById() instead.
         "prototype$__findById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.comparisons.destroyById() instead.
         "prototype$__destroyById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comparisons.updateById() instead.
         "prototype$__updateById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comparisons.link() instead.
         "prototype$__link__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comparisons.unlink() instead.
         "prototype$__unlink__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comparisons.exists() instead.
         "prototype$__exists__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.comments.findById() instead.
         "prototype$__findById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.comments.destroyById() instead.
         "prototype$__destroyById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comments.updateById() instead.
         "prototype$__updateById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comments.link() instead.
         "prototype$__link__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comments.unlink() instead.
         "prototype$__unlink__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comments.exists() instead.
         "prototype$__exists__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "HEAD"
         },
@@ -1754,6 +2089,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Discussions",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion#createMany
+         * @methodOf govrightCorpusServices.Discussion
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Discussions",
           method: "POST"
         },
@@ -2260,20 +2634,67 @@ module.factory(
           method: "GET"
         },
 
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion#prototype$searchContributors
+         * @methodOf govrightCorpusServices.Discussion
+         *
+         * @description
+         *
+         * Get the users which are participating in a given contribution.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `contributionType` – `{string=}` - 
+         *
+         *  - `parentType` – `{string=}` - 
+         *
+         *  - `parentId` – `{string=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        "prototype$searchContributors": {
+          isArray: true,
+          url: urlBase + "/Discussions/:id/search/contributors",
+          method: "GET"
+        },
+
         // INTERNAL. Use Law.discussions.findById() instead.
         "::findById::Law::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Law.discussions.destroyById() instead.
         "::destroyById::Law::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Law.discussions.updateById() instead.
         "::updateById::Law::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/discussions/:fk",
           method: "PUT"
         },
@@ -2287,6 +2708,13 @@ module.factory(
 
         // INTERNAL. Use Law.discussions.create() instead.
         "::create::Law::discussions": {
+          url: urlBase + "/Laws/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Law.discussions.createMany() instead.
+        "::createMany::Law::discussions": {
+          isArray: true,
           url: urlBase + "/Laws/:id/discussions",
           method: "POST"
         },
@@ -2311,18 +2739,27 @@ module.factory(
 
         // INTERNAL. Use Discussion.discussions.findById() instead.
         "::findById::Discussion::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.discussions.destroyById() instead.
         "::destroyById::Discussion::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.discussions.updateById() instead.
         "::updateById::Discussion::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/discussions/:fk",
           method: "PUT"
         },
@@ -2336,6 +2773,13 @@ module.factory(
 
         // INTERNAL. Use Discussion.discussions.create() instead.
         "::create::Discussion::discussions": {
+          url: urlBase + "/Discussions/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Discussion.discussions.createMany() instead.
+        "::createMany::Discussion::discussions": {
+          isArray: true,
           url: urlBase + "/Discussions/:id/discussions",
           method: "POST"
         },
@@ -2354,36 +2798,54 @@ module.factory(
 
         // INTERNAL. Use Node.discussions.findById() instead.
         "::findById::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.discussions.destroyById() instead.
         "::destroyById::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.discussions.updateById() instead.
         "::updateById::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Node.discussions.link() instead.
         "::link::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Node.discussions.unlink() instead.
         "::unlink::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.discussions.exists() instead.
         "::exists::Node::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "HEAD"
         },
@@ -2397,6 +2859,13 @@ module.factory(
 
         // INTERNAL. Use Node.discussions.create() instead.
         "::create::Node::discussions": {
+          url: urlBase + "/Nodes/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.discussions.createMany() instead.
+        "::createMany::Node::discussions": {
+          isArray: true,
           url: urlBase + "/Nodes/:id/discussions",
           method: "POST"
         },
@@ -2415,36 +2884,54 @@ module.factory(
 
         // INTERNAL. Use Version.discussions.findById() instead.
         "::findById::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.discussions.destroyById() instead.
         "::destroyById::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.discussions.updateById() instead.
         "::updateById::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Version.discussions.link() instead.
         "::link::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Version.discussions.unlink() instead.
         "::unlink::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.discussions.exists() instead.
         "::exists::Version::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "HEAD"
         },
@@ -2458,6 +2945,13 @@ module.factory(
 
         // INTERNAL. Use Version.discussions.create() instead.
         "::create::Version::discussions": {
+          url: urlBase + "/Versions/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Version.discussions.createMany() instead.
+        "::createMany::Version::discussions": {
+          isArray: true,
           url: urlBase + "/Versions/:id/discussions",
           method: "POST"
         },
@@ -2476,36 +2970,54 @@ module.factory(
 
         // INTERNAL. Use Comment.discussions.findById() instead.
         "::findById::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.discussions.destroyById() instead.
         "::destroyById::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.discussions.updateById() instead.
         "::updateById::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comment.discussions.link() instead.
         "::link::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comment.discussions.unlink() instead.
         "::unlink::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.discussions.exists() instead.
         "::exists::Comment::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "HEAD"
         },
@@ -2519,6 +3031,13 @@ module.factory(
 
         // INTERNAL. Use Comment.discussions.create() instead.
         "::create::Comment::discussions": {
+          url: urlBase + "/Comments/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Comment.discussions.createMany() instead.
+        "::createMany::Comment::discussions": {
+          isArray: true,
           url: urlBase + "/Comments/:id/discussions",
           method: "POST"
         },
@@ -2537,36 +3056,54 @@ module.factory(
 
         // INTERNAL. Use Vote.discussions.findById() instead.
         "::findById::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Vote.discussions.destroyById() instead.
         "::destroyById::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.discussions.updateById() instead.
         "::updateById::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Vote.discussions.link() instead.
         "::link::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Vote.discussions.unlink() instead.
         "::unlink::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.discussions.exists() instead.
         "::exists::Vote::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "HEAD"
         },
@@ -2580,6 +3117,13 @@ module.factory(
 
         // INTERNAL. Use Vote.discussions.create() instead.
         "::create::Vote::discussions": {
+          url: urlBase + "/Votes/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Vote.discussions.createMany() instead.
+        "::createMany::Vote::discussions": {
+          isArray: true,
           url: urlBase + "/Votes/:id/discussions",
           method: "POST"
         },
@@ -2598,36 +3142,54 @@ module.factory(
 
         // INTERNAL. Use Comparison.discussions.findById() instead.
         "::findById::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comparison.discussions.destroyById() instead.
         "::destroyById::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.discussions.updateById() instead.
         "::updateById::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comparison.discussions.link() instead.
         "::link::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comparison.discussions.unlink() instead.
         "::unlink::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.discussions.exists() instead.
         "::exists::Comparison::discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "HEAD"
         },
@@ -2641,6 +3203,13 @@ module.factory(
 
         // INTERNAL. Use Comparison.discussions.create() instead.
         "::create::Comparison::discussions": {
+          url: urlBase + "/Comparisons/:id/discussions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Comparison.discussions.createMany() instead.
+        "::createMany::Comparison::discussions": {
+          isArray: true,
           url: urlBase + "/Comparisons/:id/discussions",
           method: "POST"
         },
@@ -2665,36 +3234,54 @@ module.factory(
 
         // INTERNAL. Use User.moderating.findById() instead.
         "::findById::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use User.moderating.destroyById() instead.
         "::destroyById::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use User.moderating.updateById() instead.
         "::updateById::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use User.moderating.link() instead.
         "::link::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use User.moderating.unlink() instead.
         "::unlink::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use User.moderating.exists() instead.
         "::exists::user::moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "HEAD"
         },
@@ -2708,6 +3295,13 @@ module.factory(
 
         // INTERNAL. Use User.moderating.create() instead.
         "::create::user::moderating": {
+          url: urlBase + "/Users/:id/moderating",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.moderating.createMany() instead.
+        "::createMany::user::moderating": {
+          isArray: true,
           url: urlBase + "/Users/:id/moderating",
           method: "POST"
         },
@@ -2933,15 +3527,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.discussions
-     * @header lbServices.Discussion.discussions
+     * @name govrightCorpusServices.Discussion.discussions
+     * @header govrightCorpusServices.Discussion.discussions
      * @object
      * @description
      *
      * The object `Discussion.discussions` groups methods
      * manipulating `Discussion` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#discussions Discussion.discussions()}
+     * Call {@link govrightCorpusServices.Discussion#discussions Discussion.discussions()}
      * to query all related instances.
      */
 
@@ -3052,6 +3646,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Discussion::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.discussions#createMany
+         * @methodOf govrightCorpusServices.Discussion.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Discussion::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -3232,15 +3864,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.moderators
-     * @header lbServices.Discussion.moderators
+     * @name govrightCorpusServices.Discussion.moderators
+     * @header govrightCorpusServices.Discussion.moderators
      * @object
      * @description
      *
      * The object `Discussion.moderators` groups methods
      * manipulating `User` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#moderators Discussion.moderators()}
+     * Call {@link govrightCorpusServices.Discussion#moderators Discussion.moderators()}
      * to query all related instances.
      */
 
@@ -3351,6 +3983,44 @@ module.factory(
         R.moderators.create = function() {
           var TargetResource = $injector.get("User");
           var action = TargetResource["::create::Discussion::moderators"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.moderators#createMany
+         * @methodOf govrightCorpusServices.Discussion.moderators
+         *
+         * @description
+         *
+         * Creates a new instance in moderators of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.moderators.createMany = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::createMany::Discussion::moderators"];
           return action.apply(R, arguments);
         };
 
@@ -3604,15 +4274,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.votes
-     * @header lbServices.Discussion.votes
+     * @name govrightCorpusServices.Discussion.votes
+     * @header govrightCorpusServices.Discussion.votes
      * @object
      * @description
      *
      * The object `Discussion.votes` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#votes Discussion.votes()}
+     * Call {@link govrightCorpusServices.Discussion#votes Discussion.votes()}
      * to query all related instances.
      */
 
@@ -3723,6 +4393,44 @@ module.factory(
         R.votes.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::votes"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.votes#createMany
+         * @methodOf govrightCorpusServices.Discussion.votes
+         *
+         * @description
+         *
+         * Creates a new instance in votes of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.votes.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::votes"];
           return action.apply(R, arguments);
         };
 
@@ -3976,15 +4684,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.stats
-     * @header lbServices.Discussion.stats
+     * @name govrightCorpusServices.Discussion.stats
+     * @header govrightCorpusServices.Discussion.stats
      * @object
      * @description
      *
      * The object `Discussion.stats` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#stats Discussion.stats()}
+     * Call {@link govrightCorpusServices.Discussion#stats Discussion.stats()}
      * to query all related instances.
      */
 
@@ -4095,6 +4803,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.stats#createMany
+         * @methodOf govrightCorpusServices.Discussion.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::stats"];
           return action.apply(R, arguments);
         };
 
@@ -4239,15 +4985,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.nodes
-     * @header lbServices.Discussion.nodes
+     * @name govrightCorpusServices.Discussion.nodes
+     * @header govrightCorpusServices.Discussion.nodes
      * @object
      * @description
      *
      * The object `Discussion.nodes` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#nodes Discussion.nodes()}
+     * Call {@link govrightCorpusServices.Discussion#nodes Discussion.nodes()}
      * to query all related instances.
      */
 
@@ -4358,6 +5104,44 @@ module.factory(
         R.nodes.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::nodes"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.nodes#createMany
+         * @methodOf govrightCorpusServices.Discussion.nodes
+         *
+         * @description
+         *
+         * Creates a new instance in nodes of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.nodes.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::nodes"];
           return action.apply(R, arguments);
         };
 
@@ -4611,15 +5395,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.versions
-     * @header lbServices.Discussion.versions
+     * @name govrightCorpusServices.Discussion.versions
+     * @header govrightCorpusServices.Discussion.versions
      * @object
      * @description
      *
      * The object `Discussion.versions` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#versions Discussion.versions()}
+     * Call {@link govrightCorpusServices.Discussion#versions Discussion.versions()}
      * to query all related instances.
      */
 
@@ -4730,6 +5514,44 @@ module.factory(
         R.versions.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::versions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.versions#createMany
+         * @methodOf govrightCorpusServices.Discussion.versions
+         *
+         * @description
+         *
+         * Creates a new instance in versions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.versions.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::versions"];
           return action.apply(R, arguments);
         };
 
@@ -4983,15 +5805,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.comparisons
-     * @header lbServices.Discussion.comparisons
+     * @name govrightCorpusServices.Discussion.comparisons
+     * @header govrightCorpusServices.Discussion.comparisons
      * @object
      * @description
      *
      * The object `Discussion.comparisons` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#comparisons Discussion.comparisons()}
+     * Call {@link govrightCorpusServices.Discussion#comparisons Discussion.comparisons()}
      * to query all related instances.
      */
 
@@ -5102,6 +5924,44 @@ module.factory(
         R.comparisons.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::comparisons"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.comparisons#createMany
+         * @methodOf govrightCorpusServices.Discussion.comparisons
+         *
+         * @description
+         *
+         * Creates a new instance in comparisons of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.comparisons.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::comparisons"];
           return action.apply(R, arguments);
         };
 
@@ -5355,15 +6215,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Discussion.comments
-     * @header lbServices.Discussion.comments
+     * @name govrightCorpusServices.Discussion.comments
+     * @header govrightCorpusServices.Discussion.comments
      * @object
      * @description
      *
      * The object `Discussion.comments` groups methods
      * manipulating `Contribution` instances related to `Discussion`.
      *
-     * Call {@link lbServices.Discussion#comments Discussion.comments()}
+     * Call {@link govrightCorpusServices.Discussion#comments Discussion.comments()}
      * to query all related instances.
      */
 
@@ -5474,6 +6334,44 @@ module.factory(
         R.comments.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Discussion::comments"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Discussion.comments#createMany
+         * @methodOf govrightCorpusServices.Discussion.comments
+         *
+         * @description
+         *
+         * Creates a new instance in comments of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.comments.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Discussion::comments"];
           return action.apply(R, arguments);
         };
 
@@ -5768,18 +6666,27 @@ module.factory(
 
         // INTERNAL. Use Node.nodes.findById() instead.
         "prototype$__findById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.nodes.destroyById() instead.
         "prototype$__destroyById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.nodes.updateById() instead.
         "prototype$__updateById__nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "PUT"
         },
@@ -5810,36 +6717,54 @@ module.factory(
 
         // INTERNAL. Use Node.versions.findById() instead.
         "prototype$__findById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.versions.destroyById() instead.
         "prototype$__destroyById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.versions.updateById() instead.
         "prototype$__updateById__versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Node.comparisons.findById() instead.
         "prototype$__findById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.comparisons.destroyById() instead.
         "prototype$__destroyById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.comparisons.updateById() instead.
         "prototype$__updateById__comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "PUT"
         },
@@ -5850,56 +6775,137 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use Node.tags.findById() instead.
+        "prototype$__findById__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Node.tags.destroyById() instead.
+        "prototype$__destroyById__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.updateById() instead.
+        "prototype$__updateById__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Node.tags.link() instead.
+        "prototype$__link__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Node.tags.unlink() instead.
+        "prototype$__unlink__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.exists() instead.
+        "prototype$__exists__tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "HEAD"
+        },
+
         // INTERNAL. Use Node.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Node.discussions.link() instead.
         "prototype$__link__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Node.discussions.unlink() instead.
         "prototype$__unlink__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.discussions.exists() instead.
         "prototype$__exists__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/discussions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Node.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "PUT"
         },
@@ -5976,6 +6982,31 @@ module.factory(
         // INTERNAL. Use Node.comparisons.count() instead.
         "prototype$__count__comparisons": {
           url: urlBase + "/Nodes/:id/comparisons/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Node.tags() instead.
+        "prototype$__get__tags": {
+          isArray: true,
+          url: urlBase + "/Nodes/:id/tags",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Node.tags.create() instead.
+        "prototype$__create__tags": {
+          url: urlBase + "/Nodes/:id/tags",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.tags.destroyAll() instead.
+        "prototype$__delete__tags": {
+          url: urlBase + "/Nodes/:id/tags",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.count() instead.
+        "prototype$__count__tags": {
+          url: urlBase + "/Nodes/:id/tags/count",
           method: "GET"
         },
 
@@ -6063,6 +7094,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Nodes",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node#createMany
+         * @methodOf govrightCorpusServices.Node
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Node` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Nodes",
           method: "POST"
         },
@@ -6409,20 +7479,68 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node#prototype$addRevision
+         * @methodOf govrightCorpusServices.Node
+         *
+         * @description
+         *
+         * Add a node revision
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `revisionId` – `{string}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Node` object.)
+         * </em>
+         */
+        "prototype$addRevision": {
+          isArray: true,
+          url: urlBase + "/Nodes/:id/revision",
+          method: "POST"
+        },
+
         // INTERNAL. Use Law.nodes.findById() instead.
         "::findById::Law::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Law.nodes.destroyById() instead.
         "::destroyById::Law::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Law.nodes.updateById() instead.
         "::updateById::Law::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Laws/:id/nodes/:fk",
           method: "PUT"
         },
@@ -6436,6 +7554,13 @@ module.factory(
 
         // INTERNAL. Use Law.nodes.create() instead.
         "::create::Law::nodes": {
+          url: urlBase + "/Laws/:id/nodes",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Law.nodes.createMany() instead.
+        "::createMany::Law::nodes": {
+          isArray: true,
           url: urlBase + "/Laws/:id/nodes",
           method: "POST"
         },
@@ -6460,18 +7585,27 @@ module.factory(
 
         // INTERNAL. Use Node.nodes.findById() instead.
         "::findById::Node::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.nodes.destroyById() instead.
         "::destroyById::Node::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.nodes.updateById() instead.
         "::updateById::Node::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/nodes/:fk",
           method: "PUT"
         },
@@ -6485,6 +7619,13 @@ module.factory(
 
         // INTERNAL. Use Node.nodes.create() instead.
         "::create::Node::nodes": {
+          url: urlBase + "/Nodes/:id/nodes",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.nodes.createMany() instead.
+        "::createMany::Node::nodes": {
+          isArray: true,
           url: urlBase + "/Nodes/:id/nodes",
           method: "POST"
         },
@@ -6510,6 +7651,12 @@ module.factory(
         // INTERNAL. Use Comparison.node() instead.
         "::get::Comparison::node": {
           url: urlBase + "/Comparisons/:id/node",
+          method: "GET"
+        },
+
+        // INTERNAL. Use NodeTag.node() instead.
+        "::get::NodeTag::node": {
+          url: urlBase + "/NodeTags/:id/node",
           method: "GET"
         },
       }
@@ -6722,15 +7869,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.nodes
-     * @header lbServices.Node.nodes
+     * @name govrightCorpusServices.Node.nodes
+     * @header govrightCorpusServices.Node.nodes
      * @object
      * @description
      *
      * The object `Node.nodes` groups methods
      * manipulating `Node` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#nodes Node.nodes()}
+     * Call {@link govrightCorpusServices.Node#nodes Node.nodes()}
      * to query all related instances.
      */
 
@@ -6841,6 +7988,44 @@ module.factory(
         R.nodes.create = function() {
           var TargetResource = $injector.get("Node");
           var action = TargetResource["::create::Node::nodes"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.nodes#createMany
+         * @methodOf govrightCorpusServices.Node.nodes
+         *
+         * @description
+         *
+         * Creates a new instance in nodes of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Node` object.)
+         * </em>
+         */
+        R.nodes.createMany = function() {
+          var TargetResource = $injector.get("Node");
+          var action = TargetResource["::createMany::Node::nodes"];
           return action.apply(R, arguments);
         };
 
@@ -6985,15 +8170,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.original
-     * @header lbServices.Node.original
+     * @name govrightCorpusServices.Node.original
+     * @header govrightCorpusServices.Node.original
      * @object
      * @description
      *
      * The object `Node.original` groups methods
      * manipulating `Version` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#original Node.original()}
+     * Call {@link govrightCorpusServices.Node#original Node.original()}
      * to query all related instances.
      */
 
@@ -7074,6 +8259,44 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name govrightCorpusServices.Node.original#createMany
+         * @methodOf govrightCorpusServices.Node.original
+         *
+         * @description
+         *
+         * Creates a new instance in original of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Version` object.)
+         * </em>
+         */
+        R.original.createMany = function() {
+          var TargetResource = $injector.get("Version");
+          var action = TargetResource["::createMany::Node::original"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
          * @name govrightCorpusServices.Node.original#destroy
          * @methodOf govrightCorpusServices.Node.original
          *
@@ -7142,15 +8365,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.versions
-     * @header lbServices.Node.versions
+     * @name govrightCorpusServices.Node.versions
+     * @header govrightCorpusServices.Node.versions
      * @object
      * @description
      *
      * The object `Node.versions` groups methods
      * manipulating `Version` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#versions Node.versions()}
+     * Call {@link govrightCorpusServices.Node#versions Node.versions()}
      * to query all related instances.
      */
 
@@ -7261,6 +8484,44 @@ module.factory(
         R.versions.create = function() {
           var TargetResource = $injector.get("Version");
           var action = TargetResource["::create::Node::versions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.versions#createMany
+         * @methodOf govrightCorpusServices.Node.versions
+         *
+         * @description
+         *
+         * Creates a new instance in versions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Version` object.)
+         * </em>
+         */
+        R.versions.createMany = function() {
+          var TargetResource = $injector.get("Version");
+          var action = TargetResource["::createMany::Node::versions"];
           return action.apply(R, arguments);
         };
 
@@ -7405,15 +8666,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.comparisons
-     * @header lbServices.Node.comparisons
+     * @name govrightCorpusServices.Node.comparisons
+     * @header govrightCorpusServices.Node.comparisons
      * @object
      * @description
      *
      * The object `Node.comparisons` groups methods
      * manipulating `Comparison` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#comparisons Node.comparisons()}
+     * Call {@link govrightCorpusServices.Node#comparisons Node.comparisons()}
      * to query all related instances.
      */
 
@@ -7524,6 +8785,44 @@ module.factory(
         R.comparisons.create = function() {
           var TargetResource = $injector.get("Comparison");
           var action = TargetResource["::create::Node::comparisons"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.comparisons#createMany
+         * @methodOf govrightCorpusServices.Node.comparisons
+         *
+         * @description
+         *
+         * Creates a new instance in comparisons of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Comparison` object.)
+         * </em>
+         */
+        R.comparisons.createMany = function() {
+          var TargetResource = $injector.get("Comparison");
+          var action = TargetResource["::createMany::Node::comparisons"];
           return action.apply(R, arguments);
         };
 
@@ -7704,15 +9003,425 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.discussions
-     * @header lbServices.Node.discussions
+     * @name govrightCorpusServices.Node.tags
+     * @header govrightCorpusServices.Node.tags
+     * @object
+     * @description
+     *
+     * The object `Node.tags` groups methods
+     * manipulating `Tag` instances related to `Node`.
+     *
+     * Call {@link govrightCorpusServices.Node#tags Node.tags()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node#tags
+         * @methodOf govrightCorpusServices.Node
+         *
+         * @description
+         *
+         * Queries tags of Node.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::get::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#count
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Counts tags of Node.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.tags.count = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::count::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#create
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Creates a new instance in tags of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.create = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::create::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#createMany
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Creates a new instance in tags of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.createMany = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::createMany::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#destroyAll
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Deletes all tags of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.tags.destroyAll = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::delete::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#destroyById
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Delete a related item by id for tags.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.tags.destroyById = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::destroyById::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#exists
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Check the existence of tags relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.exists = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::exists::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#findById
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Find a related item by id for tags.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.findById = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::findById::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#link
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Add a related item by id for tags.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.link = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::link::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#unlink
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Remove the tags relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.tags.unlink = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::unlink::Node::tags"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.tags#updateById
+         * @methodOf govrightCorpusServices.Node.tags
+         *
+         * @description
+         *
+         * Update a related item by id for tags.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for tags
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tags.updateById = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::updateById::Node::tags"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name govrightCorpusServices.Node.discussions
+     * @header govrightCorpusServices.Node.discussions
      * @object
      * @description
      *
      * The object `Node.discussions` groups methods
      * manipulating `Discussion` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#discussions Node.discussions()}
+     * Call {@link govrightCorpusServices.Node#discussions Node.discussions()}
      * to query all related instances.
      */
 
@@ -7823,6 +9532,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Node::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.discussions#createMany
+         * @methodOf govrightCorpusServices.Node.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Node::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -8076,15 +9823,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Node.stats
-     * @header lbServices.Node.stats
+     * @name govrightCorpusServices.Node.stats
+     * @header govrightCorpusServices.Node.stats
      * @object
      * @description
      *
      * The object `Node.stats` groups methods
      * manipulating `Contribution` instances related to `Node`.
      *
-     * Call {@link lbServices.Node#stats Node.stats()}
+     * Call {@link govrightCorpusServices.Node#stats Node.stats()}
      * to query all related instances.
      */
 
@@ -8195,6 +9942,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Node::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Node.stats#createMany
+         * @methodOf govrightCorpusServices.Node.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Node::stats"];
           return action.apply(R, arguments);
         };
 
@@ -8374,18 +10159,27 @@ module.factory(
 
         // INTERNAL. Use Version.comments.findById() instead.
         "prototype$__findById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.comments.destroyById() instead.
         "prototype$__destroyById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.comments.updateById() instead.
         "prototype$__updateById__comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "PUT"
         },
@@ -8398,72 +10192,108 @@ module.factory(
 
         // INTERNAL. Use Version.votes.findById() instead.
         "prototype$__findById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.votes.destroyById() instead.
         "prototype$__destroyById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.votes.updateById() instead.
         "prototype$__updateById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Version.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Version.discussions.link() instead.
         "prototype$__link__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Version.discussions.unlink() instead.
         "prototype$__unlink__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.discussions.exists() instead.
         "prototype$__exists__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/discussions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Version.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "PUT"
         },
@@ -8602,6 +10432,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Versions",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Version#createMany
+         * @methodOf govrightCorpusServices.Version
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Version` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Versions",
           method: "POST"
         },
@@ -9121,7 +10990,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*}` - PersistedModel id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -9159,6 +11029,13 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Node.original.createMany() instead.
+        "::createMany::Node::original": {
+          isArray: true,
+          url: urlBase + "/Nodes/:id/original",
+          method: "POST"
+        },
+
         // INTERNAL. Use Node.original.update() instead.
         "::update::Node::original": {
           url: urlBase + "/Nodes/:id/original",
@@ -9173,18 +11050,27 @@ module.factory(
 
         // INTERNAL. Use Node.versions.findById() instead.
         "::findById::Node::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.versions.destroyById() instead.
         "::destroyById::Node::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.versions.updateById() instead.
         "::updateById::Node::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/versions/:fk",
           method: "PUT"
         },
@@ -9198,6 +11084,13 @@ module.factory(
 
         // INTERNAL. Use Node.versions.create() instead.
         "::create::Node::versions": {
+          url: urlBase + "/Nodes/:id/versions",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.versions.createMany() instead.
+        "::createMany::Node::versions": {
+          isArray: true,
           url: urlBase + "/Nodes/:id/versions",
           method: "POST"
         },
@@ -9393,15 +11286,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Version.comments
-     * @header lbServices.Version.comments
+     * @name govrightCorpusServices.Version.comments
+     * @header govrightCorpusServices.Version.comments
      * @object
      * @description
      *
      * The object `Version.comments` groups methods
      * manipulating `Comment` instances related to `Version`.
      *
-     * Call {@link lbServices.Version#comments Version.comments()}
+     * Call {@link govrightCorpusServices.Version#comments Version.comments()}
      * to query all related instances.
      */
 
@@ -9512,6 +11405,44 @@ module.factory(
         R.comments.create = function() {
           var TargetResource = $injector.get("Comment");
           var action = TargetResource["::create::Version::comments"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Version.comments#createMany
+         * @methodOf govrightCorpusServices.Version.comments
+         *
+         * @description
+         *
+         * Creates a new instance in comments of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Comment` object.)
+         * </em>
+         */
+        R.comments.createMany = function() {
+          var TargetResource = $injector.get("Comment");
+          var action = TargetResource["::createMany::Version::comments"];
           return action.apply(R, arguments);
         };
 
@@ -9692,15 +11623,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Version.votes
-     * @header lbServices.Version.votes
+     * @name govrightCorpusServices.Version.votes
+     * @header govrightCorpusServices.Version.votes
      * @object
      * @description
      *
      * The object `Version.votes` groups methods
      * manipulating `Vote` instances related to `Version`.
      *
-     * Call {@link lbServices.Version#votes Version.votes()}
+     * Call {@link govrightCorpusServices.Version#votes Version.votes()}
      * to query all related instances.
      */
 
@@ -9917,15 +11848,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Version.discussions
-     * @header lbServices.Version.discussions
+     * @name govrightCorpusServices.Version.discussions
+     * @header govrightCorpusServices.Version.discussions
      * @object
      * @description
      *
      * The object `Version.discussions` groups methods
      * manipulating `Discussion` instances related to `Version`.
      *
-     * Call {@link lbServices.Version#discussions Version.discussions()}
+     * Call {@link govrightCorpusServices.Version#discussions Version.discussions()}
      * to query all related instances.
      */
 
@@ -10036,6 +11967,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Version::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Version.discussions#createMany
+         * @methodOf govrightCorpusServices.Version.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Version::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -10289,15 +12258,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Version.stats
-     * @header lbServices.Version.stats
+     * @name govrightCorpusServices.Version.stats
+     * @header govrightCorpusServices.Version.stats
      * @object
      * @description
      *
      * The object `Version.stats` groups methods
      * manipulating `Contribution` instances related to `Version`.
      *
-     * Call {@link lbServices.Version#stats Version.stats()}
+     * Call {@link govrightCorpusServices.Version#stats Version.stats()}
      * to query all related instances.
      */
 
@@ -10408,6 +12377,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Version::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Version.stats#createMany
+         * @methodOf govrightCorpusServices.Version.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Version::stats"];
           return action.apply(R, arguments);
         };
 
@@ -10629,72 +12636,108 @@ module.factory(
 
         // INTERNAL. Use Comment.votes.findById() instead.
         "prototype$__findById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.votes.destroyById() instead.
         "prototype$__destroyById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.votes.updateById() instead.
         "prototype$__updateById__votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comment.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comment.discussions.link() instead.
         "prototype$__link__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comment.discussions.unlink() instead.
         "prototype$__unlink__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.discussions.exists() instead.
         "prototype$__exists__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/discussions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Comment.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "PUT"
         },
@@ -10808,6 +12851,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Comments",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comment#createMany
+         * @methodOf govrightCorpusServices.Comment
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Comment` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Comments",
           method: "POST"
         },
@@ -11368,7 +13450,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*}` - PersistedModel id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -11396,18 +13479,27 @@ module.factory(
 
         // INTERNAL. Use Version.comments.findById() instead.
         "::findById::Version::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.comments.destroyById() instead.
         "::destroyById::Version::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.comments.updateById() instead.
         "::updateById::Version::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/comments/:fk",
           method: "PUT"
         },
@@ -11421,6 +13513,13 @@ module.factory(
 
         // INTERNAL. Use Version.comments.create() instead.
         "::create::Version::comments": {
+          url: urlBase + "/Versions/:id/comments",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Version.comments.createMany() instead.
+        "::createMany::Version::comments": {
+          isArray: true,
           url: urlBase + "/Versions/:id/comments",
           method: "POST"
         },
@@ -11646,15 +13745,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Comment.votes
-     * @header lbServices.Comment.votes
+     * @name govrightCorpusServices.Comment.votes
+     * @header govrightCorpusServices.Comment.votes
      * @object
      * @description
      *
      * The object `Comment.votes` groups methods
      * manipulating `Vote` instances related to `Comment`.
      *
-     * Call {@link lbServices.Comment#votes Comment.votes()}
+     * Call {@link govrightCorpusServices.Comment#votes Comment.votes()}
      * to query all related instances.
      */
 
@@ -11871,15 +13970,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Comment.discussions
-     * @header lbServices.Comment.discussions
+     * @name govrightCorpusServices.Comment.discussions
+     * @header govrightCorpusServices.Comment.discussions
      * @object
      * @description
      *
      * The object `Comment.discussions` groups methods
      * manipulating `Discussion` instances related to `Comment`.
      *
-     * Call {@link lbServices.Comment#discussions Comment.discussions()}
+     * Call {@link govrightCorpusServices.Comment#discussions Comment.discussions()}
      * to query all related instances.
      */
 
@@ -11990,6 +14089,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Comment::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comment.discussions#createMany
+         * @methodOf govrightCorpusServices.Comment.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Comment::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -12243,15 +14380,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Comment.stats
-     * @header lbServices.Comment.stats
+     * @name govrightCorpusServices.Comment.stats
+     * @header govrightCorpusServices.Comment.stats
      * @object
      * @description
      *
      * The object `Comment.stats` groups methods
      * manipulating `Contribution` instances related to `Comment`.
      *
-     * Call {@link lbServices.Comment#stats Comment.stats()}
+     * Call {@link govrightCorpusServices.Comment#stats Comment.stats()}
      * to query all related instances.
      */
 
@@ -12362,6 +14499,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Comment::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comment.stats#createMany
+         * @methodOf govrightCorpusServices.Comment.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Comment::stats"];
           return action.apply(R, arguments);
         };
 
@@ -12612,54 +14787,81 @@ module.factory(
 
         // INTERNAL. Use Vote.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Vote.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Vote.discussions.link() instead.
         "prototype$__link__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Vote.discussions.unlink() instead.
         "prototype$__unlink__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.discussions.exists() instead.
         "prototype$__exists__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/discussions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Vote.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Vote.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "PUT"
         },
@@ -12748,6 +14950,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Votes",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Vote#createMany
+         * @methodOf govrightCorpusServices.Vote
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Vote` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Votes",
           method: "POST"
         },
@@ -13096,18 +15337,27 @@ module.factory(
 
         // INTERNAL. Use Version.votes.findById() instead.
         "::findById::Version::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.votes.destroyById() instead.
         "::destroyById::Version::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.votes.updateById() instead.
         "::updateById::Version::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/votes/:fk",
           method: "PUT"
         },
@@ -13133,18 +15383,27 @@ module.factory(
 
         // INTERNAL. Use Comment.votes.findById() instead.
         "::findById::Comment::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.votes.destroyById() instead.
         "::destroyById::Comment::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.votes.updateById() instead.
         "::updateById::Comment::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/votes/:fk",
           method: "PUT"
         },
@@ -13341,15 +15600,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Vote.discussions
-     * @header lbServices.Vote.discussions
+     * @name govrightCorpusServices.Vote.discussions
+     * @header govrightCorpusServices.Vote.discussions
      * @object
      * @description
      *
      * The object `Vote.discussions` groups methods
      * manipulating `Discussion` instances related to `Vote`.
      *
-     * Call {@link lbServices.Vote#discussions Vote.discussions()}
+     * Call {@link govrightCorpusServices.Vote#discussions Vote.discussions()}
      * to query all related instances.
      */
 
@@ -13460,6 +15719,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Vote::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Vote.discussions#createMany
+         * @methodOf govrightCorpusServices.Vote.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Vote::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -13713,15 +16010,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Vote.stats
-     * @header lbServices.Vote.stats
+     * @name govrightCorpusServices.Vote.stats
+     * @header govrightCorpusServices.Vote.stats
      * @object
      * @description
      *
      * The object `Vote.stats` groups methods
      * manipulating `Contribution` instances related to `Vote`.
      *
-     * Call {@link lbServices.Vote#stats Vote.stats()}
+     * Call {@link govrightCorpusServices.Vote#stats Vote.stats()}
      * to query all related instances.
      */
 
@@ -13832,6 +16129,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Vote::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Vote.stats#createMany
+         * @methodOf govrightCorpusServices.Vote.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Vote::stats"];
           return action.apply(R, arguments);
         };
 
@@ -14017,54 +16352,81 @@ module.factory(
 
         // INTERNAL. Use Comparison.discussions.findById() instead.
         "prototype$__findById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comparison.discussions.destroyById() instead.
         "prototype$__destroyById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.discussions.updateById() instead.
         "prototype$__updateById__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comparison.discussions.link() instead.
         "prototype$__link__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Comparison.discussions.unlink() instead.
         "prototype$__unlink__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.discussions.exists() instead.
         "prototype$__exists__discussions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/discussions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Comparison.stats.findById() instead.
         "prototype$__findById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comparison.stats.destroyById() instead.
         "prototype$__destroyById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.stats.updateById() instead.
         "prototype$__updateById__stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "PUT"
         },
@@ -14159,6 +16521,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Comparisons",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comparison#createMany
+         * @methodOf govrightCorpusServices.Comparison
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Comparison` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Comparisons",
           method: "POST"
         },
@@ -14637,7 +17038,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*}` - PersistedModel id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -14669,18 +17071,27 @@ module.factory(
 
         // INTERNAL. Use Node.comparisons.findById() instead.
         "::findById::Node::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.comparisons.destroyById() instead.
         "::destroyById::Node::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.comparisons.updateById() instead.
         "::updateById::Node::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/comparisons/:fk",
           method: "PUT"
         },
@@ -14694,6 +17105,13 @@ module.factory(
 
         // INTERNAL. Use Node.comparisons.create() instead.
         "::create::Node::comparisons": {
+          url: urlBase + "/Nodes/:id/comparisons",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.comparisons.createMany() instead.
+        "::createMany::Node::comparisons": {
+          isArray: true,
           url: urlBase + "/Nodes/:id/comparisons",
           method: "POST"
         },
@@ -14919,15 +17337,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Comparison.discussions
-     * @header lbServices.Comparison.discussions
+     * @name govrightCorpusServices.Comparison.discussions
+     * @header govrightCorpusServices.Comparison.discussions
      * @object
      * @description
      *
      * The object `Comparison.discussions` groups methods
      * manipulating `Discussion` instances related to `Comparison`.
      *
-     * Call {@link lbServices.Comparison#discussions Comparison.discussions()}
+     * Call {@link govrightCorpusServices.Comparison#discussions Comparison.discussions()}
      * to query all related instances.
      */
 
@@ -15038,6 +17456,44 @@ module.factory(
         R.discussions.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::Comparison::discussions"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comparison.discussions#createMany
+         * @methodOf govrightCorpusServices.Comparison.discussions
+         *
+         * @description
+         *
+         * Creates a new instance in discussions of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.discussions.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::Comparison::discussions"];
           return action.apply(R, arguments);
         };
 
@@ -15291,15 +17747,15 @@ module.factory(
         };
     /**
      * @ngdoc object
-     * @name lbServices.Comparison.stats
-     * @header lbServices.Comparison.stats
+     * @name govrightCorpusServices.Comparison.stats
+     * @header govrightCorpusServices.Comparison.stats
      * @object
      * @description
      *
      * The object `Comparison.stats` groups methods
      * manipulating `Contribution` instances related to `Comparison`.
      *
-     * Call {@link lbServices.Comparison#stats Comparison.stats()}
+     * Call {@link govrightCorpusServices.Comparison#stats Comparison.stats()}
      * to query all related instances.
      */
 
@@ -15410,6 +17866,44 @@ module.factory(
         R.stats.create = function() {
           var TargetResource = $injector.get("Contribution");
           var action = TargetResource["::create::Comparison::stats"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Comparison.stats#createMany
+         * @methodOf govrightCorpusServices.Comparison.stats
+         *
+         * @description
+         *
+         * Creates a new instance in stats of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        R.stats.createMany = function() {
+          var TargetResource = $injector.get("Contribution");
+          var action = TargetResource["::createMany::Comparison::stats"];
           return action.apply(R, arguments);
         };
 
@@ -15692,6 +18186,45 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Contributions",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Contribution#createMany
+         * @methodOf govrightCorpusServices.Contribution
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Contribution` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Contributions",
           method: "POST"
         },
@@ -16040,198 +18573,297 @@ module.factory(
 
         // INTERNAL. Use Discussion.votes.findById() instead.
         "::findById::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.votes.destroyById() instead.
         "::destroyById::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.votes.updateById() instead.
         "::updateById::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.votes.link() instead.
         "::link::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.votes.unlink() instead.
         "::unlink::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.votes.exists() instead.
         "::exists::Discussion::votes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/votes/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.stats.findById() instead.
         "::findById::Discussion::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.stats.destroyById() instead.
         "::destroyById::Discussion::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.stats.updateById() instead.
         "::updateById::Discussion::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/stats/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.findById() instead.
         "::findById::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.nodes.destroyById() instead.
         "::destroyById::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.nodes.updateById() instead.
         "::updateById::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.link() instead.
         "::link::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.nodes.unlink() instead.
         "::unlink::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.nodes.exists() instead.
         "::exists::Discussion::nodes": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/nodes/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.versions.findById() instead.
         "::findById::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.versions.destroyById() instead.
         "::destroyById::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.versions.updateById() instead.
         "::updateById::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.versions.link() instead.
         "::link::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.versions.unlink() instead.
         "::unlink::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.versions.exists() instead.
         "::exists::Discussion::versions": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/versions/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.comparisons.findById() instead.
         "::findById::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.comparisons.destroyById() instead.
         "::destroyById::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comparisons.updateById() instead.
         "::updateById::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comparisons.link() instead.
         "::link::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comparisons.unlink() instead.
         "::unlink::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comparisons.exists() instead.
         "::exists::Discussion::comparisons": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comparisons/rel/:fk",
           method: "HEAD"
         },
 
         // INTERNAL. Use Discussion.comments.findById() instead.
         "::findById::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.comments.destroyById() instead.
         "::destroyById::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comments.updateById() instead.
         "::updateById::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comments.link() instead.
         "::link::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.comments.unlink() instead.
         "::unlink::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.comments.exists() instead.
         "::exists::Discussion::comments": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/comments/rel/:fk",
           method: "HEAD"
         },
@@ -16245,6 +18877,13 @@ module.factory(
 
         // INTERNAL. Use Discussion.votes.create() instead.
         "::create::Discussion::votes": {
+          url: urlBase + "/Discussions/:id/votes",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Discussion.votes.createMany() instead.
+        "::createMany::Discussion::votes": {
+          isArray: true,
           url: urlBase + "/Discussions/:id/votes",
           method: "POST"
         },
@@ -16274,6 +18913,13 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Discussion.stats.createMany() instead.
+        "::createMany::Discussion::stats": {
+          isArray: true,
+          url: urlBase + "/Discussions/:id/stats",
+          method: "POST"
+        },
+
         // INTERNAL. Use Discussion.stats.destroyAll() instead.
         "::delete::Discussion::stats": {
           url: urlBase + "/Discussions/:id/stats",
@@ -16295,6 +18941,13 @@ module.factory(
 
         // INTERNAL. Use Discussion.nodes.create() instead.
         "::create::Discussion::nodes": {
+          url: urlBase + "/Discussions/:id/nodes",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Discussion.nodes.createMany() instead.
+        "::createMany::Discussion::nodes": {
+          isArray: true,
           url: urlBase + "/Discussions/:id/nodes",
           method: "POST"
         },
@@ -16324,6 +18977,13 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Discussion.versions.createMany() instead.
+        "::createMany::Discussion::versions": {
+          isArray: true,
+          url: urlBase + "/Discussions/:id/versions",
+          method: "POST"
+        },
+
         // INTERNAL. Use Discussion.versions.destroyAll() instead.
         "::delete::Discussion::versions": {
           url: urlBase + "/Discussions/:id/versions",
@@ -16345,6 +19005,13 @@ module.factory(
 
         // INTERNAL. Use Discussion.comparisons.create() instead.
         "::create::Discussion::comparisons": {
+          url: urlBase + "/Discussions/:id/comparisons",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Discussion.comparisons.createMany() instead.
+        "::createMany::Discussion::comparisons": {
+          isArray: true,
           url: urlBase + "/Discussions/:id/comparisons",
           method: "POST"
         },
@@ -16374,6 +19041,13 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Discussion.comments.createMany() instead.
+        "::createMany::Discussion::comments": {
+          isArray: true,
+          url: urlBase + "/Discussions/:id/comments",
+          method: "POST"
+        },
+
         // INTERNAL. Use Discussion.comments.destroyAll() instead.
         "::delete::Discussion::comments": {
           url: urlBase + "/Discussions/:id/comments",
@@ -16388,18 +19062,27 @@ module.factory(
 
         // INTERNAL. Use Node.stats.findById() instead.
         "::findById::Node::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Node.stats.destroyById() instead.
         "::destroyById::Node::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Node.stats.updateById() instead.
         "::updateById::Node::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Nodes/:id/stats/:fk",
           method: "PUT"
         },
@@ -16413,6 +19096,13 @@ module.factory(
 
         // INTERNAL. Use Node.stats.create() instead.
         "::create::Node::stats": {
+          url: urlBase + "/Nodes/:id/stats",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.stats.createMany() instead.
+        "::createMany::Node::stats": {
+          isArray: true,
           url: urlBase + "/Nodes/:id/stats",
           method: "POST"
         },
@@ -16431,18 +19121,27 @@ module.factory(
 
         // INTERNAL. Use Version.stats.findById() instead.
         "::findById::Version::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Version.stats.destroyById() instead.
         "::destroyById::Version::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Version.stats.updateById() instead.
         "::updateById::Version::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Versions/:id/stats/:fk",
           method: "PUT"
         },
@@ -16456,6 +19155,13 @@ module.factory(
 
         // INTERNAL. Use Version.stats.create() instead.
         "::create::Version::stats": {
+          url: urlBase + "/Versions/:id/stats",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Version.stats.createMany() instead.
+        "::createMany::Version::stats": {
+          isArray: true,
           url: urlBase + "/Versions/:id/stats",
           method: "POST"
         },
@@ -16474,18 +19180,27 @@ module.factory(
 
         // INTERNAL. Use Comment.stats.findById() instead.
         "::findById::Comment::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comment.stats.destroyById() instead.
         "::destroyById::Comment::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comment.stats.updateById() instead.
         "::updateById::Comment::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comments/:id/stats/:fk",
           method: "PUT"
         },
@@ -16499,6 +19214,13 @@ module.factory(
 
         // INTERNAL. Use Comment.stats.create() instead.
         "::create::Comment::stats": {
+          url: urlBase + "/Comments/:id/stats",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Comment.stats.createMany() instead.
+        "::createMany::Comment::stats": {
+          isArray: true,
           url: urlBase + "/Comments/:id/stats",
           method: "POST"
         },
@@ -16517,18 +19239,27 @@ module.factory(
 
         // INTERNAL. Use Vote.stats.findById() instead.
         "::findById::Vote::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Vote.stats.destroyById() instead.
         "::destroyById::Vote::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Vote.stats.updateById() instead.
         "::updateById::Vote::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Votes/:id/stats/:fk",
           method: "PUT"
         },
@@ -16542,6 +19273,13 @@ module.factory(
 
         // INTERNAL. Use Vote.stats.create() instead.
         "::create::Vote::stats": {
+          url: urlBase + "/Votes/:id/stats",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Vote.stats.createMany() instead.
+        "::createMany::Vote::stats": {
+          isArray: true,
           url: urlBase + "/Votes/:id/stats",
           method: "POST"
         },
@@ -16560,18 +19298,27 @@ module.factory(
 
         // INTERNAL. Use Comparison.stats.findById() instead.
         "::findById::Comparison::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Comparison.stats.destroyById() instead.
         "::destroyById::Comparison::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Comparison.stats.updateById() instead.
         "::updateById::Comparison::stats": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Comparisons/:id/stats/:fk",
           method: "PUT"
         },
@@ -16585,6 +19332,13 @@ module.factory(
 
         // INTERNAL. Use Comparison.stats.create() instead.
         "::create::Comparison::stats": {
+          url: urlBase + "/Comparisons/:id/stats",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Comparison.stats.createMany() instead.
+        "::createMany::Comparison::stats": {
+          isArray: true,
           url: urlBase + "/Comparisons/:id/stats",
           method: "POST"
         },
@@ -16832,6 +19586,9 @@ module.factory(
          * </em>
          */
         "prototype$__findById__accessTokens": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/accessTokens/:fk",
           method: "GET"
         },
@@ -16864,6 +19621,9 @@ module.factory(
          * This method returns no data.
          */
         "prototype$__destroyById__accessTokens": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/accessTokens/:fk",
           method: "DELETE"
         },
@@ -16903,42 +19663,63 @@ module.factory(
          * </em>
          */
         "prototype$__updateById__accessTokens": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/accessTokens/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use User.moderating.findById() instead.
         "prototype$__findById__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use User.moderating.destroyById() instead.
         "prototype$__destroyById__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use User.moderating.updateById() instead.
         "prototype$__updateById__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use User.moderating.link() instead.
         "prototype$__link__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use User.moderating.unlink() instead.
         "prototype$__unlink__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use User.moderating.exists() instead.
         "prototype$__exists__moderating": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Users/:id/moderating/rel/:fk",
           method: "HEAD"
         },
@@ -17431,36 +20212,54 @@ module.factory(
 
         // INTERNAL. Use Discussion.moderators.findById() instead.
         "::findById::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "GET"
         },
 
         // INTERNAL. Use Discussion.moderators.destroyById() instead.
         "::destroyById::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.moderators.updateById() instead.
         "::updateById::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.moderators.link() instead.
         "::link::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "PUT"
         },
 
         // INTERNAL. Use Discussion.moderators.unlink() instead.
         "::unlink::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "DELETE"
         },
 
         // INTERNAL. Use Discussion.moderators.exists() instead.
         "::exists::Discussion::moderators": {
+          params: {
+          'fk': '@fk'
+          },
           url: urlBase + "/Discussions/:id/moderators/rel/:fk",
           method: "HEAD"
         },
@@ -17474,6 +20273,13 @@ module.factory(
 
         // INTERNAL. Use Discussion.moderators.create() instead.
         "::create::Discussion::moderators": {
+          url: urlBase + "/Discussions/:id/moderators",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Discussion.moderators.createMany() instead.
+        "::createMany::Discussion::moderators": {
+          isArray: true,
           url: urlBase + "/Discussions/:id/moderators",
           method: "POST"
         },
@@ -17701,15 +20507,15 @@ module.factory(
 
     /**
      * @ngdoc object
-     * @name lbServices.User.moderating
-     * @header lbServices.User.moderating
+     * @name govrightCorpusServices.User.moderating
+     * @header govrightCorpusServices.User.moderating
      * @object
      * @description
      *
      * The object `User.moderating` groups methods
      * manipulating `Discussion` instances related to `User`.
      *
-     * Call {@link lbServices.User#moderating User.moderating()}
+     * Call {@link govrightCorpusServices.User#moderating User.moderating()}
      * to query all related instances.
      */
 
@@ -17820,6 +20626,44 @@ module.factory(
         R.moderating.create = function() {
           var TargetResource = $injector.get("Discussion");
           var action = TargetResource["::create::user::moderating"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.User.moderating#createMany
+         * @methodOf govrightCorpusServices.User.moderating
+         *
+         * @description
+         *
+         * Creates a new instance in moderating of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Discussion` object.)
+         * </em>
+         */
+        R.moderating.createMany = function() {
+          var TargetResource = $injector.get("Discussion");
+          var action = TargetResource["::createMany::user::moderating"];
           return action.apply(R, arguments);
         };
 
@@ -18075,6 +20919,2514 @@ module.factory(
     return R;
   }]);
 
+/**
+ * @ngdoc object
+ * @name govrightCorpusServices.NodeRevisionMap
+ * @header govrightCorpusServices.NodeRevisionMap
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `NodeRevisionMap` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "NodeRevisionMap",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/NodeRevisionMaps/:id",
+      { 'id': '@id' },
+      {
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#create
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/NodeRevisionMaps",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#createMany
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/NodeRevisionMaps",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#upsert
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/NodeRevisionMaps",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#exists
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/NodeRevisionMaps/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#findById
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/NodeRevisionMaps/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#find
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/NodeRevisionMaps",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#findOne
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/NodeRevisionMaps/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#updateAll
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "updateAll": {
+          url: urlBase + "/NodeRevisionMaps/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#deleteById
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "deleteById": {
+          url: urlBase + "/NodeRevisionMaps/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#count
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/NodeRevisionMaps/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#prototype$updateAttributes
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/NodeRevisionMaps/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#createChangeStream
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/NodeRevisionMaps/change-stream",
+          method: "POST"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#updateOrCreate
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeRevisionMap` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#update
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#destroyById
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeRevisionMap#removeById
+         * @methodOf govrightCorpusServices.NodeRevisionMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name govrightCorpusServices.NodeRevisionMap#modelName
+    * @propertyOf govrightCorpusServices.NodeRevisionMap
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `NodeRevisionMap`.
+    */
+    R.modelName = "NodeRevisionMap";
+
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name govrightCorpusServices.Tag
+ * @header govrightCorpusServices.Tag
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `Tag` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "Tag",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/Tags/:id",
+      { 'id': '@id' },
+      {
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#create
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/Tags",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#createMany
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/Tags",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#upsert
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/Tags",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#exists
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/Tags/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#findById
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/Tags/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#find
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/Tags",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#findOne
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/Tags/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#updateAll
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "updateAll": {
+          url: urlBase + "/Tags/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#deleteById
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "deleteById": {
+          url: urlBase + "/Tags/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#count
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/Tags/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#prototype$updateAttributes
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/Tags/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#createChangeStream
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/Tags/change-stream",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.tags.findById() instead.
+        "::findById::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Node.tags.destroyById() instead.
+        "::destroyById::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.updateById() instead.
+        "::updateById::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Node.tags.link() instead.
+        "::link::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Node.tags.unlink() instead.
+        "::unlink::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.exists() instead.
+        "::exists::Node::tags": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Nodes/:id/tags/rel/:fk",
+          method: "HEAD"
+        },
+
+        // INTERNAL. Use Node.tags() instead.
+        "::get::Node::tags": {
+          isArray: true,
+          url: urlBase + "/Nodes/:id/tags",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Node.tags.create() instead.
+        "::create::Node::tags": {
+          url: urlBase + "/Nodes/:id/tags",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.tags.createMany() instead.
+        "::createMany::Node::tags": {
+          isArray: true,
+          url: urlBase + "/Nodes/:id/tags",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Node.tags.destroyAll() instead.
+        "::delete::Node::tags": {
+          url: urlBase + "/Nodes/:id/tags",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Node.tags.count() instead.
+        "::count::Node::tags": {
+          url: urlBase + "/Nodes/:id/tags/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use NodeTag.tag() instead.
+        "::get::NodeTag::tag": {
+          url: urlBase + "/NodeTags/:id/tag",
+          method: "GET"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#updateOrCreate
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#update
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#destroyById
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.Tag#removeById
+         * @methodOf govrightCorpusServices.Tag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name govrightCorpusServices.Tag#modelName
+    * @propertyOf govrightCorpusServices.Tag
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `Tag`.
+    */
+    R.modelName = "Tag";
+
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name govrightCorpusServices.NodeTag
+ * @header govrightCorpusServices.NodeTag
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `NodeTag` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "NodeTag",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/NodeTags/:id",
+      { 'id': '@id' },
+      {
+
+        // INTERNAL. Use NodeTag.node() instead.
+        "prototype$__get__node": {
+          url: urlBase + "/NodeTags/:id/node",
+          method: "GET"
+        },
+
+        // INTERNAL. Use NodeTag.tag() instead.
+        "prototype$__get__tag": {
+          url: urlBase + "/NodeTags/:id/tag",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#create
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/NodeTags",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#createMany
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/NodeTags",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#upsert
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/NodeTags",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#exists
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/NodeTags/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#findById
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/NodeTags/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#find
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/NodeTags",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#findOne
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/NodeTags/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#updateAll
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "updateAll": {
+          url: urlBase + "/NodeTags/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#deleteById
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "deleteById": {
+          url: urlBase + "/NodeTags/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#count
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/NodeTags/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#prototype$updateAttributes
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/NodeTags/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#createChangeStream
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/NodeTags/change-stream",
+          method: "POST"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#updateOrCreate
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `NodeTag` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#update
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#destroyById
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#removeById
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name govrightCorpusServices.NodeTag#modelName
+    * @propertyOf govrightCorpusServices.NodeTag
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `NodeTag`.
+    */
+    R.modelName = "NodeTag";
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#node
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Fetches belongsTo relation node.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Node` object.)
+         * </em>
+         */
+        R.node = function() {
+          var TargetResource = $injector.get("Node");
+          var action = TargetResource["::get::NodeTag::node"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.NodeTag#tag
+         * @methodOf govrightCorpusServices.NodeTag
+         *
+         * @description
+         *
+         * Fetches belongsTo relation tag.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Tag` object.)
+         * </em>
+         */
+        R.tag = function() {
+          var TargetResource = $injector.get("Tag");
+          var action = TargetResource["::get::NodeTag::tag"];
+          return action.apply(R, arguments);
+        };
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name govrightCorpusServices.DiscussionCountry
+ * @header govrightCorpusServices.DiscussionCountry
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `DiscussionCountry` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "DiscussionCountry",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/DiscussionCountries/:id",
+      { 'id': '@id' },
+      {
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#create
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/DiscussionCountries",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#createMany
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/DiscussionCountries",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#upsert
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/DiscussionCountries",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#exists
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/DiscussionCountries/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#findById
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/DiscussionCountries/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#find
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/DiscussionCountries",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#findOne
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/DiscussionCountries/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#updateAll
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "updateAll": {
+          url: urlBase + "/DiscussionCountries/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#deleteById
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "deleteById": {
+          url: urlBase + "/DiscussionCountries/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#count
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/DiscussionCountries/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#prototype$updateAttributes
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/DiscussionCountries/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#createChangeStream
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/DiscussionCountries/change-stream",
+          method: "POST"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#updateOrCreate
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DiscussionCountry` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#update
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#destroyById
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name govrightCorpusServices.DiscussionCountry#removeById
+         * @methodOf govrightCorpusServices.DiscussionCountry
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name govrightCorpusServices.DiscussionCountry#modelName
+    * @propertyOf govrightCorpusServices.DiscussionCountry
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `DiscussionCountry`.
+    */
+    R.modelName = "DiscussionCountry";
+
+
+    return R;
+  }]);
+
 
 module
   .factory('LoopBackAuth', function() {
@@ -18209,6 +23561,18 @@ module
      */
     this.setUrlBase = function(url) {
       urlBase = url;
+    };
+
+    /**
+     * @ngdoc method
+     * @name govrightCorpusServices.LoopBackResourceProvider#getUrlBase
+     * @methodOf govrightCorpusServices.LoopBackResourceProvider
+     * @description
+     * Get the URL of the REST API server. The URL provided
+     * to the code generator (`lb-ng` or `grunt-loopback-sdk-angular`) is used.
+     */
+    this.getUrlBase = function() {
+      return urlBase;
     };
 
     this.$get = ['$resource', function($resource) {

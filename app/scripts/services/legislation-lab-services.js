@@ -40,6 +40,8 @@
  * LLAuth.socialLogin(authUrl).then(function() {
  *   // do stuff with LLAuth.currentUser
  *   console.log( LLAuth.currentUser );
+ * }).catch(function(err) {
+ *   // show login error message
  * });
  * ```
  *
@@ -52,7 +54,39 @@
  * LLAuth.login(username, password).then(function() {
  *   // do stuff with LLAuth.currentUser
  *   console.log( LLAuth.currentUser );
+ * }).catch(function(err) {
+ *   // show login error message
  * });
+ * ```
+ *
+ * - Top level controller snippet:
+ *
+ * ```
+ * $scope.$on('auth:login', function() {
+ *   $scope.currentUser = LLAuth.currentUser;
+ * });
+ *
+ * $scope.logout = function() {
+ *   LLAuth.logout().then(function() {
+ *     $scope.currentUser = null;
+ *     $state.go('site.login'); // or something
+ *   });
+ * }
+ * ```
+ *
+ * - Restore user session
+ *
+ * ```
+ * angular
+ *   .module('app')
+ *   .run(['LLAuth', function(LLAuth) {
+ *     LLAuth.checkLogin().then(function() {
+ *       // do stuff with LLAuth.currentUser
+ *       console.log( LLAuth.currentUser );
+ *     }).catch(function() {
+ *       console.warn('Your login expired or something.');
+ *     });
+ *   }]);
  * ```
  */
 (function() {
@@ -206,8 +240,9 @@
        * @description
        *
        * Login user using LoopBack user credentials.
-       * Current user object becomes available
-       * on `LLAuth.currentUser` in case of successful login.
+       * Current user object becomes available on `LLAuth.currentUser` in case of successful login.
+       *
+       * `auth:login` event is broadcasted in case of successful login.
        *
        * @param {String|Object} user Username or email or object like `{username: '', password: ''}`
        * or `{email: '', password: ''}`.
@@ -255,6 +290,8 @@
        * Login user via Facebook. Creates the login popup and starts the login process. Current user object becomes available
        * on `LLAuth.currentUser` in case of successful login.
        *
+       * `auth:login` event is broadcasted in case of successful login.
+       *
        * @param {String} authUrl Login popup url.
        *
        * @returns {Object} Login promise which is resolved with login data in case
@@ -286,6 +323,50 @@
 
       /**
        * @ngdoc method
+       * @name LLServices.LLAuth#checkLogin
+       * @methodOf LLServices.LLAuth
+       * @broadcasts auth:login
+       *
+       * @description
+       *
+       * Restore user session using cached LB/Facebook auth data.
+       *
+       * This is something that is typically called in the `run` block of the app
+       * to check if users have been logged in previous sessions and automatically log them in.
+       * Current user data becomes available in `LLAuth.currentUser` in case of successful login.
+       *
+       * `auth:login` event is broadcasted in case of successful login.
+       *
+       * @returns {Object} Login promise which is resolved with current user instance in case
+       * of successful login.
+       */
+      checkLogin: function() {
+        if(User.isAuthenticated()) {
+          return User.getCurrent(function (userData) {
+            LLAuth.currentUser = {
+              id: userData.id,
+              profile: userData.profile,
+              facebookAccessData: Facebook.loadAccessData(),
+              settings: userData.settings,
+              email: userData.email
+            };
+            Facebook.init();
+            $rootScope.$broadcast('auth:login');
+          }, function (err) {
+            console.error('LL Auth: session restore failed.', err);
+            LoopBackAuth.clearUser();
+            LoopBackAuth.clearStorage();
+            Facebook.clearStorage();
+          }).$promise;
+        } else {
+          return $q(function(resolve, reject) {
+            reject(new Error('Session data is missing or expired.'));
+          });
+        }
+      },
+
+      /**
+       * @ngdoc method
        * @name LLServices.LLAuth#logout
        * @methodOf LLServices.LLAuth
        *
@@ -297,22 +378,25 @@
        * @eventType broadcast
        */
       logout: function() {
-        User.logout();
-        Facebook.clearStorage();
-        LLAuth.currentUser = null;
-        /**
-         * @ngdoc event
-         * @name auth:logout
-         * @eventOf LLServices.LLAuth
-         * @eventType broadcast
-         *
-         * @description
-         *
-         * `auth:logout` is broadcasted when logout is done. Example subscription:
-         *
-         * `$scope.$on('auth:logout', function() {...});`
-         */
-        $rootScope.$broadcast('auth:logout');
+        return User.logout().$promise.then(function () {
+          Facebook.clearStorage();
+          LLAuth.currentUser = null;
+          /**
+           * @ngdoc event
+           * @name auth:logout
+           * @eventOf LLServices.LLAuth
+           * @eventType broadcast
+           *
+           * @description
+           *
+           * `auth:logout` is broadcasted when logout is done. Example subscription:
+           *
+           * `$scope.$on('auth:logout', function() {...});`
+           */
+          $rootScope.$broadcast('auth:logout');
+        }).catch(function(err)  {
+          console.error('LL Auth: logout error.', err);
+        });
       }
     };
 
@@ -379,12 +463,12 @@
         return;
       }
 
+      accessData = loadAccessData();
       config = config || {};
       config.appId = config.appId || getAppId();
       config.cookie = false;
       config.xfbml = config.xfbml || true;
       config.version = config.version || 'v2.3';
-      accessData = loadAccessData();
 
       return $window.FB.init(config);
     }
@@ -499,6 +583,7 @@
      *
      */
     function saveAccessData(facebookData, remember) {
+      clearStorage();
       var storage = remember ? localStorage : sessionStorage;
       props.forEach(function(name) {
         storage[propsPrefix + name] = facebookData[name];
@@ -521,12 +606,13 @@
      * - `accessToken` - user access token
      */
     function loadAccessData() {
-      var res = {};
-      props.forEach(function(name) {
-        var key = propsPrefix + name;
-        res[name] = localStorage[key] || sessionStorage[key] || null;
-      });
-      return res;
+      if(!accessData.appId) {
+        props.forEach(function (name) {
+          var key = propsPrefix + name;
+          accessData[name] = localStorage[key] || sessionStorage[key] || null;
+        });
+      }
+      return accessData;
     }
 
     /**

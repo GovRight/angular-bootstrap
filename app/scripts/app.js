@@ -32,31 +32,14 @@
       $locationProvider.html5Mode(true);
     }])
     .run([
-      '$rootScope', '$window', '$location', 'User', 'LoopBackAuth', 'LLFacebook', 'LLAuth',
-      function($rootScope, $window, $location, User, LoopBackAuth, LLFacebook, LLAuth) {
+      '$rootScope', '$window', '$location', 'LLAuth',
+      function($rootScope, $window, $location, LLAuth) {
+        // Restore user session
+        LLAuth.checkLogin();
+
         // Analytics & scrolling
         $rootScope.$on('$stateChangeSuccess', function() {
           document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-          // Get user data if previously logged in
-          if(User.isAuthenticated()) {
-            User.getCurrent(function (userData) {
-              LLAuth.currentUser = {
-                id: userData.id,
-                profile: userData.profile,
-                facebookAccessData: LLFacebook.loadAccessData(),
-                settings: userData.settings,
-                email: userData.email
-              };
-              LLFacebook.init();
-            }, function (err) {
-              console.log(err);
-              LoopBackAuth.clearUser();
-              LoopBackAuth.clearStorage();
-              LLFacebook.clearStorage();
-            });
-          }
-
           if ($window.ga) {
             $window.ga('send', 'pageview', { page: $location.path() });
           }
