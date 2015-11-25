@@ -30,6 +30,7 @@
     "jshint"
   ],
   "dependencies": {
+    "app-root-path": "^1.0.0",
     "autoprefixer-core": "^4.0.2",
     "bluebird": "^2.9.25",
     "body-parser": "^1.13.1",

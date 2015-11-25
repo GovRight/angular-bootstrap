@@ -1,0 +1,45 @@
+(function() {
+  'use strict';
+
+  // External variables
+  var styles = <%= styles %>;
+  var scripts = <%= scripts %>;
+  var ngAppName =  '<%= appName %>';
+
+  // Here we go
+  var currentScript = document.scripts[document.scripts.length -1];
+  var parentNode = currentScript.parentNode;
+  var appUrl = currentScript.src.replace('loader.js', '');
+  var head = document.getElementsByTagName('head')[0];
+
+  // Inject styles
+  styles.forEach(function(styleUri) {
+    var style = document.createElement('link');
+    style.type = 'text/css';
+    style.rel = 'stylesheet';
+    style.href = appUrl + styleUri;
+    head.appendChild(style);
+  });
+
+  // Inject app container
+  var container = document.createElement('div');
+  container.innerHTML = '<div ui-view></div>';
+  container.setAttribute('ng-app', ngAppName);
+  container.id = 'rev-tracker-app';
+  // Copy custom data attributes like law-slug to the container
+  [].forEach.call(currentScript.attributes, function(attr) {
+    if(/^data-/.test(attr.name)) {
+      container.setAttribute(attr.name, attr.value);
+    }
+  });
+  parentNode.appendChild(container);
+
+  // Inject scripts
+  scripts.forEach(function(scriptUri) {
+    // Loose check if it's an external script
+    if(scriptUri.indexOf('http') !== 0 && scriptUri.indexOf('//') !== 0) {
+      scriptUri = appUrl + scriptUri;
+    }
+    document.write('<script src="' + scriptUri + '"></script>');
+  });
+}());

@@ -10,6 +10,11 @@ var modRewrite  = require('connect-modrewrite');
 var reload = browserSync.reload;
 var seq = require('run-sequence');
 var path = require('path');
+var appRoot = require('app-root-path');
+
+// External tasks
+// Build external app loader
+// appRoot.require('lib/gulp/loader/tasks')(ANGULAR_MODULE);
 
 gulp.task('styles', ['iconfont'], function () {
   return gulp.src('app/styles/main.scss')
