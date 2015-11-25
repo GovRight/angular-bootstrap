@@ -8,7 +8,7 @@
 
       this.getParams = function() {
         if(!embeddingParams) {
-          var appElement = document.getElementById('ng-app-root');
+          var appElement = document.getElementById('govright-app-root');
           embeddingParams = {
             isEmbeddedMode: appElement.tagName !== 'HTML'
           };
