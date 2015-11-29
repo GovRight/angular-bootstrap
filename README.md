@@ -2,7 +2,7 @@
 
 ## Pre-reqs:
 
- - [Node.js](https://nodejs.org/) v0.12.x
+ - [Node.js](https://nodejs.org/) >=0.12.7
 
 ## Initial setup
 
