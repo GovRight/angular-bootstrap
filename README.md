@@ -15,7 +15,7 @@ Follow [this guide](INSTALL.md) for initial project setup.
 ## Launch
 
 1. **Local development:** ``npm run serve`` (runs the backend and local dev server)
-2. **Production:** set virtual host index to `dist` and start the backend ``npm run start:forever``
+2. **Production:** set virtual host root to `dist` and start the backend ``npm run start:forever``
 
 ## Useful commands
 
