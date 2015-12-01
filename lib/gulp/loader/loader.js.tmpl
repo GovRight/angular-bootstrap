@@ -26,6 +26,7 @@
   container.innerHTML = '<div ui-view></div>';
   container.setAttribute('ng-app', ngAppName);
   container.id = 'govright-app-root';
+  container.className = 'govright-app-root';
   // Copy custom data attributes like law-slug to the container
   [].forEach.call(currentScript.attributes, function(attr) {
     if(/^data-/.test(attr.name)) {
