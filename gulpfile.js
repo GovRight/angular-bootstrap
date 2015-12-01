@@ -145,7 +145,7 @@ gulp.task('serve', ['env:development', 'templates', 'styles', 'fonts', 'inject']
           next();
         },
         modRewrite([
-          '^/(auth/success.*)$ http://localhost:3069/$1 [P,L]',
+          '^/(auth/success.*)$ http://localhost:1551/$1 [P,L]',
           '!\\.\\w+$ /index.html [L]'
         ])
       ]
