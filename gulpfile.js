@@ -139,6 +139,11 @@ gulp.task('serve', ['env:development', 'templates', 'styles', 'fonts', 'inject']
         '/bower_components': 'bower_components'
       },
       middleware: [
+        // Fonts and svgs are blocked by default for some reason
+        function (req, res, next) {
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          next();
+        },
         modRewrite([
           '^/(auth/success.*)$ http://localhost:3069/$1 [P,L]',
           '!\\.\\w+$ /index.html [L]'
