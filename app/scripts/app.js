@@ -10,7 +10,8 @@
       'ngMaterial',
       'ngAnimate',
       'ui.router',
-      'ngLodash'
+      'ngLodash',
+      'gettext'
     ]).config([
       '$mdThemingProvider',
       function($mdThemingProvider) {

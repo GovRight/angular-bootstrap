@@ -9,8 +9,10 @@
         $stateProvider
           .state('site', {
             url: '/',
-            controller: 'SiteController',
             templateUrl: '/templates/site.html'
+            // SiteController is set in ng-controller on html
+            // to handle head meta, direction class and stuff
+            // controller: 'SiteController'
           }).state('site.404', {
             params: { message: undefined },
             templateUrl: '/templates/site/404.html',
