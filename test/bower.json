@@ -1,9 +1,0 @@
-{
-  "name": "ql-yo-gen-wa",
-  "private": true,
-  "dependencies": {
-    "chai": "~1.8.0",
-    "mocha": "~1.14.0"
-  },
-  "devDependencies": {}
-}
