@@ -1,31 +1,46 @@
 (function() {
   'use strict';
 
-  // External variables
-  var styles = <%= styles %>;
-  var scripts = <%= scripts %>;
   var ngAppName =  '<%= appName %>';
+  window.GovrightApps = window.GovrightApps || {
+    incrementId: 0,
+    loaded: {}
+  };
 
-  // Here we go
   var currentScript = document.scripts[document.scripts.length -1];
   var parentNode = currentScript.parentNode;
-  var appUrl = currentScript.src.replace('loader.js', '');
-  var head = document.getElementsByTagName('head')[0];
 
-  // Inject styles
-  styles.forEach(function(styleUri) {
-    var style = document.createElement('link');
-    style.type = 'text/css';
-    style.rel = 'stylesheet';
-    style.href = appUrl + styleUri;
-    head.appendChild(style);
-  });
+  if(!window.GovrightApps.loaded[ngAppName]) {
+    var styles = <%= styles %>;
+    var scripts = <%= scripts %>;
+    var head = document.getElementsByTagName('head')[0];
+    var appUrl = currentScript.src.split('?').shift().replace('loader.js', '');
+
+    // Inject styles
+    styles.forEach(function(styleUri) {
+      var style = document.createElement('link');
+      style.type = 'text/css';
+      style.rel = 'stylesheet';
+      style.href = appUrl + styleUri;
+      head.appendChild(style);
+    });
+
+    // Inject scripts
+    scripts.forEach(function(scriptUri) {
+      // Loose check if it's an external script
+      if(scriptUri.indexOf('http') !== 0 && scriptUri.indexOf('//') !== 0) {
+        scriptUri = appUrl + scriptUri;
+      }
+      document.write('<script src="' + scriptUri + '"></script>');
+    });
+    window.GovrightApps.loaded[ngAppName] = true;
+  }
 
   // Inject app container
   var container = document.createElement('div');
+  var containerId = 'govright-app-root-' + window.GovrightApps.incrementId;
   container.innerHTML = '<div ui-view></div>';
-  container.setAttribute('ng-app', ngAppName);
-  container.id = 'govright-app-root';
+  container.id = containerId;
   container.className = 'govright-app-root';
   // Copy custom data attributes like law-slug to the container
   [].forEach.call(currentScript.attributes, function(attr) {
@@ -35,12 +50,9 @@
   });
   parentNode.appendChild(container);
 
-  // Inject scripts
-  scripts.forEach(function(scriptUri) {
-    // Loose check if it's an external script
-    if(scriptUri.indexOf('http') !== 0 && scriptUri.indexOf('//') !== 0) {
-      scriptUri = appUrl + scriptUri;
-    }
-    document.write('<script src="' + scriptUri + '"></script>');
+  document.addEventListener('DOMContentLoaded', function() {
+    angular.bootstrap(document.getElementById(containerId), [ngAppName]);
   });
+
+  window.GovrightApps.incrementId++;
 }());
