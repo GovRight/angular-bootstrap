@@ -18,7 +18,7 @@
     "govright-corpus-services": "1.0.0",
     "govright-platform-services": "1.0.0",
     "modernizr": "2.8.3",
-    "matchMedia": "~0.3.0"
+    "matchMedia": "0.3.0"
   },
   "resolutions": {
     "modernizr": "2.8.3"
