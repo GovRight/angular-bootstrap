@@ -53,17 +53,21 @@ app.get('/social', function(req, res) {
       delete query.port;
     }
 
-    var url = 'http://' + domain + path;
+    var base = 'http://' + domain + '/';
+    if(path.charAt(0) === '/') {
+      path = path.substr(1);
+    }
+    var url = base + path;
 
     var params = [];
     _.each(query, function(v, k) {
       params.push(k + '=' + v);
     });
     if(params.length) {
-      url += '?' + params.join('&');
+      url += (url.indexOf('?') > -1 ? '&' : '?') + params.join('&');
     }
 
-    phantom.eval(url).catch(function(e) {
+    phantom.eval(url, base).catch(function(e) {
       console.error(e);
       console.log(req.query);
       res.status(422).end();
