@@ -5,7 +5,7 @@
     .module('app')
     .controller('SiteController', SiteController);
 
-  SiteController.$inject = ['$scope', 'Law', 'SiteConfig', 'LLAuth', 'LLLocale'];
+  SiteController.$inject = ['$scope', 'Law', 'SiteConfig', 'grAuth', 'grLocale'];
 
   function SiteController($scope, Law, SiteConfig, Auth, Locale) {
     $scope.currentLocale = Locale.current;

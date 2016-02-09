@@ -3,15 +3,15 @@
 (function() {
   angular
     .module('app', [
-      'app.config',
       'app.templates',
-      'govrightCorpusServices',
-      'LLServices',
+      'app.config',
+      'govright.platformServices',
+      'govright.corpusServices',
       'ngMaterial',
       'ngAnimate',
-      'ui.router',
       'ngLodash',
-      'gettext'
+      'gettext',
+      'ui.router'
     ]).config([
       '$mdThemingProvider',
       function($mdThemingProvider) {
@@ -33,10 +33,10 @@
       $locationProvider.html5Mode(true);
     }])
     .run([
-      '$rootScope', '$window', '$location', 'LLAuth',
-      function($rootScope, $window, $location, LLAuth) {
+      '$rootScope', '$window', '$location', 'grAuth',
+      function($rootScope, $window, $location, Auth) {
         // Restore user session
-        LLAuth.checkLogin();
+        Auth.checkLogin();
 
         // Analytics & scrolling
         $rootScope.$on('$stateChangeSuccess', function() {

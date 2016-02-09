@@ -13,7 +13,7 @@
               $animate.leave(element.children().eq(0)).then(function () {
                 element.remove();
                 scope = element = attributes = null;
-                angular.element('body').addClass('app-loaded');
+                angular.element(document.body).addClass('app-loaded');
               });
             });
           });
