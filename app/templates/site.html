@@ -1,5 +1,15 @@
 <md-toolbar layout-padding layout="row" layout-align="space-between center" ng-if="!isEmbedded">
-  HEADER
+  <div>HEADER</div>
+  <div ng-if="currentUser">
+    Hello, {{currentUser.profile.displayName}} |
+    <a href ng-click="logout()">
+      Logout
+      <i class="ico ico-exit"></i>
+    </a>
+  </div>
+  <div ng-if="!currentUser">
+    <a href ng-click="login()">Login</a>
+  </div>
 </md-toolbar>
 
 <ui-view></ui-view>

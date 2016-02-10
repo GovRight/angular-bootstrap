@@ -22,11 +22,7 @@
     };
 
     $scope.login = function () {
-      var authUrl = State.authUrl;
-      if (window.location.port !== '') {
-        authUrl += ':' + window.location.port;
-      }
-      Auth.socialLogin(authUrl).then(function () {
+      Auth.socialLogin(State.authUrl).then(function () {
         console.log(Auth.currentUser);
       });
     };
