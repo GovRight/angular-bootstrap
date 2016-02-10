@@ -5,9 +5,10 @@
     .module('app')
     .controller('SiteController', SiteController);
 
-  SiteController.$inject = ['$scope', 'Law', 'SiteConfig', 'grAuth', 'grLocale'];
+  SiteController.$inject = ['$scope', 'State', 'grAuth', 'grLocale'];
 
-  function SiteController($scope, Law, SiteConfig, Auth, Locale) {
+  function SiteController($scope, State, Auth, Locale) {
+    $scope.isEmbedded = State.embeddingParams.isEmbeddedMode;
     $scope.currentLocale = Locale.current;
 
     $scope.$on('auth:login', function () {
@@ -21,7 +22,7 @@
     };
 
     $scope.login = function () {
-      var authUrl = SiteConfig.authUrl + '/' + window.location.hostname;
+      var authUrl = State.authUrl;
       if (window.location.port !== '') {
         authUrl += ':' + window.location.port;
       }
@@ -29,10 +30,5 @@
         console.log(Auth.currentUser);
       });
     };
-
-    // Example
-    Law.find(function(laws) {
-      $scope.laws = laws;
-    });
   }
 }());

@@ -3,16 +3,16 @@
 (function() {
   angular
     .module('app')
-    .config([
-      '$stateProvider', '$urlRouterProvider',
+    .config(['$stateProvider', '$urlRouterProvider',
       function($stateProvider, $urlRouterProvider) {
         $stateProvider
           .state('site', {
-            url: '/',
+            abstract: true,
             templateUrl: '/templates/site.html'
-            // SiteController is set in ng-controller on html
-            // to handle head meta, direction class and stuff
-            // controller: 'SiteController'
+          }).state('site.laws', {
+            url: '/laws',
+            templateUrl: '/templates/law/index.html',
+            controller: 'LawIndexController'
           }).state('site.404', {
             params: { message: undefined },
             templateUrl: '/templates/site/404.html',
@@ -27,8 +27,8 @@
           if ($location.path() === '') {
             $location.replace().path('/');
           } else {
-            console.error('404: route not found!');
-            // Handle 404 here
+            console.error($location.path(), '404: route not found!');
+            $injector.get('grMessage').error404();
           }
         });
       }

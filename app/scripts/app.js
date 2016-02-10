@@ -12,15 +12,13 @@
       'ngLodash',
       'gettext',
       'ui.router'
-    ]).config([
-      '$mdThemingProvider',
+    ]).config(['$mdThemingProvider',
       function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
-          .primaryPalette('light-blue')
-          .accentPalette('amber');
+          .primaryPalette('blue')
+          .accentPalette('red');
       }
-    ]).config([
-      'LoopBackResourceProvider', 'SiteConfig', '$httpProvider',
+    ]).config(['LoopBackResourceProvider', 'SiteConfig', '$httpProvider',
       function (LoopBackResourceProvider, SiteConfig, $httpProvider) {
         // Enable CORS
         $httpProvider.defaults.useXDomain = true;
@@ -29,11 +27,20 @@
         // Configure backend URL
         LoopBackResourceProvider.setUrlBase(SiteConfig.corpusUrl);
       }
-    ]).config(['$locationProvider', function($locationProvider) {
-      $locationProvider.html5Mode(true);
-    }])
-    .run([
-      '$rootScope', '$window', '$location', 'grAuth',
+    ]).config(['$locationProvider', 'grEmbeddingParamsProvider',
+      function($locationProvider, EmbeddingProvider) {
+        // HTML5 mode is disabled in embedded mode to not screw up site urls.
+        // For instance, if you try to reload page on something
+        // like site.com/law/slug you're probably gonna get 404.
+        // However, site.com/#!/law/slug will work fine.
+        if(!EmbeddingProvider.getParams().isEmbeddedMode) {
+          $locationProvider.html5Mode(true);
+        } else {
+          $locationProvider.html5Mode(false);
+          $locationProvider.hashPrefix('!'); // Enable hashbang for social sharing
+        }
+      }
+    ]).run(['$rootScope', '$window', '$location', 'grAuth',
       function($rootScope, $window, $location, Auth) {
         // Restore user session
         Auth.checkLogin();

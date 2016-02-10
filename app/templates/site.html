@@ -1,10 +1,9 @@
-<h3>Yay! We've got laws!</h3>
-<ul>
-  <li ng-repeat="law in laws">
-    <a href="http://legislationlab.org/en/law/{{law.slug}}/" target="_blank">{{law.slug}}</a>
-  </li>
-</ul>
+<md-toolbar layout-padding layout="row" layout-align="space-between center" ng-if="!isEmbedded">
+  HEADER
+</md-toolbar>
 
-<div ng-if="currentUser">
+<ui-view></ui-view>
 
-</div>
+<md-toolbar layout-padding layout="row" layout-align="space-between center" ng-if="!isEmbedded">
+  FOOTER
+</md-toolbar>
