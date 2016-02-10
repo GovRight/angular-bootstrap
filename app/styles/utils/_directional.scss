@@ -20,20 +20,28 @@ $right: null;
   }
 
   // LTR VERSION
-  $dir: ltr;
-  $left: left;
-  $right: right;
-  body.ltr & { @content; }
+  $dir: ltr !global;
+  $left: left !global;
+  $right: right !global;
+  @if & {
+    .ltr & { @content; }
+  } @else {
+    .ltr { @content; }
+  }
 
   // RTL VERSION
-  $dir: rtl;
-  $left: right;
-  $right: left;
-  body.rtl & { @content; }
+  $dir: rtl !global;
+  $left: right !global;
+  $right: left !global;
+  @if & {
+    .rtl & { @content; }
+  } @else {
+    .rtl { @content; }
+  }
 
   // Clear $dir, preventing all directional helper methods from
   // working outside of a directional block
-  $dir: null;
+  $dir: null !global;
 }
 
 @function if-ltr($if, $else: null) {

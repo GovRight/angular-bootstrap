@@ -26,7 +26,7 @@ gulp.task('styles', ['iconfont'], function () {
       onError: console.error.bind(console, 'Sass error:')
     }))
     .pipe($.postcss([
-      require('autoprefixer-core')({browsers: ['last 1 version']})
+      require('autoprefixer')({browsers: ['last 1 version']})
     ]))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
@@ -102,10 +102,10 @@ gulp.task('iconfont', function() {
       fontHeight: 448,
       descent: 64
     }))
-    .on('codepoints', function(codepoints) {
+    .on('glyphs', function(glyphs) {
       gulp.src('app/styles/icon-font.css.tmpl')
         .pipe($.consolidate('lodash', {
-          glyphs: codepoints,
+          glyphs: glyphs,
           fontName: 'AppIconFont',
           fontFilename: ANGULAR_MODULE + '-icons',
           fontPath: '/fonts',
