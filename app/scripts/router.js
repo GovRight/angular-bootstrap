@@ -10,7 +10,7 @@
             abstract: true,
             templateUrl: '/templates/site.html'
           }).state('site.laws', {
-            url: '/laws',
+            url: '/',
             templateUrl: '/templates/law/index.html',
             controller: 'LawIndexController'
           }).state('site.404', {
