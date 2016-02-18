@@ -1,16 +1,15 @@
 # Another awesome Angular project!
 
-## Pre-reqs:
+## Overview
 
- - [Node.js](https://nodejs.org/) >=5.4.0
+* **Pre-reqs:** [Node.js](https://nodejs.org/) >=5.4.0
+* **Initial setup:** please follow [this guide](INSTALL.md) for initial project setup
+before you start any development.
 
-## Initial setup
+## Installation / Update
 
-Follow [this guide](INSTALL.md) for initial project setup.
-
-## Installation
-
-1. `npm install`
+For the initial installation you have to run `npm install`. 
+When pulling changes you may need to run `npm install` or `bower install` afterwards.
 
 ## Launch
 
