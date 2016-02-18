@@ -2,7 +2,7 @@
 
 ## Pre-reqs:
 
- - [Node.js](https://nodejs.org/) >=0.12.7
+ - [Node.js](https://nodejs.org/) >=5.4.0
 
 ## Initial setup
 
@@ -24,8 +24,7 @@ Follow [this guide](INSTALL.md) for initial project setup.
 3. Build stage dist: ``gulp build:stage``
 4. Run backend: ``npm start``
 5. Run backend with forever: ``npm run start:forever``
-6. Build sitemap: ``gulp sitemap`` for production, ``gulp sitemap:stage`` for stage dist
-7. Restart backend forever process: ``npm run reload``
+6. Restart backend forever process: ``npm run reload``
 
 ## Production deployment
 
