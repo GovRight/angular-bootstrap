@@ -6,7 +6,7 @@
 * **Initial setup:** please follow [this guide](INSTALL.md) for initial project setup
 before you start any development.
 
-## Installation / Update
+## Installation / update
 
 For the initial installation you have to run `npm install`. 
 When pulling changes you may need to run `npm install` or `bower install` afterwards.
