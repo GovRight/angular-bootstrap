@@ -31,6 +31,27 @@ When pulling changes you may need to run `npm install` or `bower install` afterw
 2. Relaunch the backend if need: ``npm run reload``
 4. Build dist: ``gulp``
 
+## Embedding the app
+
+Application can be embedded into any site like this:
+
+```html
+<!-- For local development, replace example.com with something like localhost:9000 -->
+
+<script src="http://example.com/loader.js" data-route="site.law" data-law-slug="test"></script>
+```
+
+You can pass any parameters to the app through script data attributes. 
+The example above will produce the next result inside the app:
+
+```javascript
+// `State` is service that can be injected
+// It has the `embeddingParams` property that contains all external params
+
+console.log( State.embeddingParams.route ); // "site.law"
+console.log( State.embeddingParams.lawSlug ); // "test"
+```
+
 ## Localization Process
 
 Localization works by matching translation points in the source to PO translation
