@@ -3,12 +3,14 @@
 (function() {
   angular
     .module('app')
-    .config(['$stateProvider', '$urlRouterProvider',
-      function($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'grEmbeddingParamsProvider',
+      function($stateProvider, $urlRouterProvider, grEmbeddingParamsProvider) {
         $stateProvider
           .state('site', {
             abstract: true,
-            templateUrl: '/templates/site.html'
+            templateUrl: '/templates/site.html',
+            controller: grEmbeddingParamsProvider.getParams().isEmbeddedMode ?
+              'SiteController' : undefined
           }).state('site.laws', {
             url: '/',
             templateUrl: '/templates/law/index.html',
