@@ -21,6 +21,9 @@
       var style = document.createElement('link');
       style.type = 'text/css';
       style.rel = 'stylesheet';
+      if(styleUri[0] === '/') {
+        styleUri = styleUri.substr(1);
+      }
       style.href = appUrl + styleUri;
       head.appendChild(style);
     });
@@ -29,6 +32,9 @@
     scripts.forEach(function(scriptUri) {
       // Loose check if it's an external script
       if(scriptUri.indexOf('http') !== 0 && scriptUri.indexOf('//') !== 0) {
+        if(scriptUri[0] === '/') {
+          scriptUri = scriptUri.substr(1);
+        }
         scriptUri = appUrl + scriptUri;
       }
       document.write('<script src="' + scriptUri + '"></script>');
