@@ -9,12 +9,12 @@
 
   var currentScript = document.scripts[document.scripts.length -1];
   var parentNode = currentScript.parentNode;
+  var appUrl = currentScript.src.split('?').shift().replace('loader.js', '');
 
   if(!window.GovrightApps.loaded[ngAppName]) {
     var styles = <%= styles %>;
     var scripts = <%= scripts %>;
     var head = document.getElementsByTagName('head')[0];
-    var appUrl = currentScript.src.split('?').shift().replace('loader.js', '');
 
     // Inject styles
     styles.forEach(function(styleUri) {
