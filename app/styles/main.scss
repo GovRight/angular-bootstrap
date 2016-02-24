@@ -3,12 +3,8 @@
 @import 'utils/directional';
 @import 'utils/mixins';
 
-// Nest module styles
-.govright-app-root {
-  @import 'modules/common/legacy';
-  @import 'modules/common/shared';
-  @import 'modules/site/index';
-}
-
-// Not nested due to keyframes
 @import 'modules/directives/app-loading';
+
+@import 'modules/common/legacy';
+@import 'modules/common/shared';
+@import 'modules/site/index';
