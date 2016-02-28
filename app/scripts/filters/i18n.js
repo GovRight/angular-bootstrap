@@ -3,7 +3,7 @@
 (function() {
   angular
     .module('app')
-    .filter('i18n', ['LLLocale', i18n]);
+    .filter('i18n', ['grLocale', i18n]);
 
   function i18n(Locale) {
     return function(instance, key, extended) {
