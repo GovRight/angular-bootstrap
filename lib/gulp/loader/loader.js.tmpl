@@ -54,10 +54,10 @@
       container.setAttribute(attr.name, attr.value);
     }
   });
-  if(appUrl.indexOf(':') > 0) {
-    var port = appUrl.split(':').pop().replace('/', '');
-    container.setAttribute('data-app-port', port);
-  }
+  var port = appUrl.split(':').pop().replace(/\//g, '');
+    if(port && !isNaN(port)) {
+      container.setAttribute('data-app-port', port);
+    }
   parentNode.appendChild(container);
 
   document.addEventListener('DOMContentLoaded', function() {
