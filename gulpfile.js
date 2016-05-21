@@ -12,6 +12,9 @@ var seq = require('run-sequence');
 var path = require('path');
 var appRoot = require('app-root-path');
 
+// process.env.npm_package_config_port is not available in gulp
+var packageJson = require('./package.json');
+
 // External tasks
 // Build external app loader
 // appRoot.require('lib/gulp/loader/tasks')(ANGULAR_MODULE);
@@ -145,7 +148,7 @@ gulp.task('serve', ['env:development', 'templates', 'styles', 'fonts', 'inject']
           next();
         },
         modRewrite([
-          '^/(auth/success.*)$ http://localhost:1551/$1 [P,L]',
+          '^/(auth/success.*)$ http://localhost:' + packageJson.config.port + '/$1 [P,L]',
           '!\\.\\w+$ /index.html [L]'
         ])
       ]

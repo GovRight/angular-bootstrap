@@ -29,32 +29,36 @@ exec('git config user.name && git config user.email && git config --get remote.o
   ];
 
   inquirer.prompt(questions).then(function (answers) {
-     var packageJson =  JSON.parse(fs.readFileSync('./sample/package.json').toString());
-     var bowerJson = JSON.parse(fs.readFileSync('./bower.json').toString());
-     var readmeMd =  fs.readFileSync('./sample/README.md').toString();
-     answers.name = answers.name.trim();
+    var packageJson =  JSON.parse(fs.readFileSync('./sample/package.json').toString());
+    var bowerJson = JSON.parse(fs.readFileSync('./bower.json').toString());
+    var readmeMd =  fs.readFileSync('./sample/README.md').toString();
+    answers.name = answers.name.trim();
+    answers.port = parseInt(answers.port);
 
-     packageJson.name = slugify(answers.name);
-     packageJson.description = answers.description;
-     packageJson.contributors.push({
-       name: gitInfo[0],
-       email: gitInfo[1]
-     });
-     packageJson.repository.url = gitInfo[2];
+    packageJson.name = slugify(answers.name);
+    packageJson.description = answers.description;
+    packageJson.contributors.push({
+     name: gitInfo[0],
+     email: gitInfo[1]
+    });
+    packageJson.repository.url = gitInfo[2];
+    if(answers.port) {
+      packageJson.config.port = answers.port;
+    }
 
-     bowerJson.name = slugify(answers.name);
-     bowerJson.description = answers.description;
-     bowerJson.authors.push(gitInfo[0] + ' <' + gitInfo[1] + '>');
+    bowerJson.name = slugify(answers.name);
+    bowerJson.description = answers.description;
+    bowerJson.authors.push(gitInfo[0] + ' <' + gitInfo[1] + '>');
 
-     readmeMd = readmeMd.replace('{{projectName}}', answers.name)
-         .replace('{{projectDescription}}', answers.description)
-         .replace('{{appPort}}', answers.port);
+    readmeMd = readmeMd.replace('{{projectName}}', answers.name)
+       .replace('{{projectDescription}}', answers.description)
+       .replace('{{appPort}}', answers.port);
 
-     fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2), 'utf8');
-     fs.writeFileSync('./bower.json', JSON.stringify(bowerJson, null, 2), 'utf8');
-     fs.writeFileSync('./README.md', readmeMd, 'utf8');
+    fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2), 'utf8');
+    fs.writeFileSync('./bower.json', JSON.stringify(bowerJson, null, 2), 'utf8');
+    fs.writeFileSync('./README.md', readmeMd, 'utf8');
 
-     console.log('\n\x1b[32mProject setup is done. Installing project dependencies...\x1b[0m\n');
+    console.log('\n\x1b[32mProject setup is done. Installing project dependencies...\x1b[0m\n');
   });
 });
 

@@ -24,6 +24,9 @@
   "pre-commit": [
     "jshint"
   ],
+  "config": {
+    "port": 3456
+  },
   "dependencies": {
     "app-root-path": "^1.2.0",
     "autoprefixer": "^6.3.1",
