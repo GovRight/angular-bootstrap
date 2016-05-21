@@ -3,9 +3,6 @@
   "version": "1.1.0",
   "description": "A template to kick-start an AngularJS 1 app using GovRight Corpus backend",
   "main": "setup.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "start": "echo 'Installing setup dependencies, please wait...' && npm install > /dev/null && echo && node ./setup.js && cp ./sample/npm-shrinkwrap.json ./npm-shrinkwrap.json && rm -rf ./node_modules ./sample ./setup.js && npm install && bower install && echo && echo 'All done, happy coding!'"
   },
