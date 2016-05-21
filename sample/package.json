@@ -19,8 +19,7 @@
     "start": "if [ -f ./.env ]; then env $(cat ./.env | xargs) node .; else NODE_ENV=development node .; fi",
     "start:forever": "if [ -f ./.env ]; then env $(cat ./.env | xargs) forever start .; else echo 'Please create an .env file with a valid NODE_ENV variable.' >&2; fi",
     "reload": "forever restart .",
-    "serve": "NODE_ENV=development node . & gulp serve",
-    "postinstall": "bower install"
+    "serve": "NODE_ENV=development node . & gulp serve"
   },
   "pre-commit": [
     "jshint"

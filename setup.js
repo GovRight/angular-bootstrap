@@ -3,24 +3,28 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 
 console.log('\x1b[32mWelcome to the GovRight project wizard!\x1b[0m\n');
+console.log('Please enter inquired data:');
 
 exec('git config user.name && git config user.email && git config --get remote.origin.url', function(error, stdout, stderr) {
   var gitInfo = stdout.trim().split('\n');
   var questions = [
     {
       name: 'name',
-      message: 'Enter the project name (e.g., My awesome angular project!):',
+      message: 'Project name (e.g., My awesome angular project!):',
       type: 'input'
     },
     {
       name: 'description',
-      message: 'Enter the project description (a sentence or two):',
-      type: 'input'
+      message: 'Project description (a sentence or two, 140 characters max):',
+      type: 'input',
+      validate: function(str) {
+        return str.length <= 140 || 'The "description" is too long, the limit is 140 characters';
+      }
     },
     {
       name: 'port',
-      message: 'Specify the backend application port (number from 5000 to 9999):',
-      type: 'confirm'
+      message: 'Backend application port (number from 5000 to 9999):',
+      type: 'input'
     }
   ];
 
@@ -28,6 +32,7 @@ exec('git config user.name && git config user.email && git config --get remote.o
      var packageJson =  JSON.parse(fs.readFileSync('./sample/package.json').toString());
      var bowerJson = JSON.parse(fs.readFileSync('./bower.json').toString());
      var readmeMd =  fs.readFileSync('./sample/README.md').toString();
+     answers.name = answers.name.trim();
 
      packageJson.name = slugify(answers.name);
      packageJson.description = answers.description;
