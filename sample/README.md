@@ -9,8 +9,9 @@
 
 ## Installation / update
 
-For the initial installation you have to run `npm install`.
-When pulling changes you may need to run `npm install` or `bower install` afterwards.
+* When installing for the first time you have to run `npm install && bower install`
+* When pulling changes you may need to run `npm install` or `bower install` afterwards
+* No need to run anything after initial project setup
 
 ## Launch
 
