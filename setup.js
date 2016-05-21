@@ -23,7 +23,7 @@ exec('git config user.name && git config user.email && git config --get remote.o
     },
     {
       name: 'port',
-      message: 'Backend application port (number from 5000 to 9999):',
+      message: 'Backend application port (a number from 3000 to 9999):',
       type: 'input'
     }
   ];
