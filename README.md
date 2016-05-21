@@ -2,6 +2,10 @@
 
 A template to kick-start an AngularJS 1 app using GovRight Corpus backend.
 
+## Pre-requirements
+
+* [Node.js](https://nodejs.org/) >=5.4.0 <6.0.0
+
 ## Setup
 
 1. Download this repo as a zip file.
