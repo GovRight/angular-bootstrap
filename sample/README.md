@@ -2,7 +2,7 @@
 
 {{projectDescription}}
 
-## Pre-requirements
+## Requirements
 
 * [Node.js](https://nodejs.org/) >=5.4.0 <6.0.0
 * [Gulp](http://gulpjs.com/) and [Bower](http://bower.io/) installed globally
