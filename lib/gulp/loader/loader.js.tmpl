@@ -2,7 +2,8 @@
   'use strict';
 
   var ngAppName =  '<%= appName %>';
-  window.GovrightApps = window.GovrightApps || {
+  window.GovRight = window.GovRight || {};
+  window.GovRight.$apps = window.GovRight.$apps || {
     incrementId: 0,
     loaded: {}
   };
@@ -11,7 +12,7 @@
   var parentNode = currentScript.parentNode;
   var appUrl = currentScript.src.split('?').shift().replace('loader.js', '');
 
-  if(!window.GovrightApps.loaded[ngAppName]) {
+  if(!window.GovRight.$apps.loaded[ngAppName]) {
     var styles = <%= styles %>;
     var scripts = <%= scripts %>;
     var head = document.getElementsByTagName('head')[0];
@@ -39,12 +40,12 @@
       }
       document.write('<script src="' + scriptUri + '"></script>');
     });
-    window.GovrightApps.loaded[ngAppName] = true;
+    window.GovRight.$apps.loaded[ngAppName] = true;
   }
 
   // Inject app container
   var container = document.createElement('div');
-  var containerId = 'govright-app-root-' + window.GovrightApps.incrementId;
+  var containerId = 'govright-app-root-' + window.GovRight.$apps.incrementId;
   container.innerHTML = '<div ui-view></div>';
   container.id = containerId;
   container.className = 'govright-app-root';
@@ -64,5 +65,5 @@
     angular.bootstrap(document.getElementById(containerId), [ngAppName]);
   });
 
-  window.GovrightApps.incrementId++;
+  window.GovRight.$apps.incrementId++;
 }());
