@@ -3,7 +3,7 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 
 console.log('\x1b[32mWelcome to the GovRight project wizard!\x1b[0m\n');
-console.log('Please enter inquired data:');
+console.log('Please enter required data:');
 
 exec('git config user.name && git config user.email && git config --get remote.origin.url', function(error, stdout, stderr) {
   var gitInfo = stdout.trim().split('\n');
