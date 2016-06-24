@@ -9,7 +9,7 @@ A template to kick-start an AngularJS 1 app using GovRight Corpus backend.
 
 ## Setup
 
-1. Download this repo as a zip file.
+1. [https://github.com/GovRight/angular-bootstrap/archive/master.zip](Download) this repo as a zip file.
 2. Unpack files to the folder with your newly created project repo.
 3. Run `npm start` and follow the guide, setup process may take a while.
 4. Commit changes and start project development. That's it, happy coding!
