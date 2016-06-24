@@ -7,7 +7,8 @@
     "node": ">=5.4.0 <6.0.0"
   },
   "scripts": {
-    "start": "echo 'Installing setup dependencies, please wait...' && npm install > /dev/null && echo && node ./setup.js && cp ./sample/npm-shrinkwrap.json ./npm-shrinkwrap.json && rm -rf ./node_modules ./sample ./setup.js && npm install && bower install && echo && echo 'All done, happy coding!'"
+    "start": "chmod +x ./install/setup.sh && ./install/setup.sh",
+    "test": "node ./install/setup.js --dry-run"
   },
   "repository": {
     "type": "git",
