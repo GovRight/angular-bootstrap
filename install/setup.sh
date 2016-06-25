@@ -23,6 +23,7 @@ if [ -d ./test ]; then
   cp -Rf ./install/test/* ./test/
   # These specific versions may look stale and kind of obsolete but at least they work well together
   npm install chai chai-as-promised karma@0.13.19 karma-angular-filesort@1.0.1 karma-chai@0.1.0 karma-json-fixtures-preprocessor@0.0.6 karma-mocha@0.2.1 karma-mocha-reporter@1.1.5 karma-phantomjs-launcher@1.0.0 karma-spec-reporter@0.0.23 karma-wiredep@1.0.1 mocha@2.4.5 phantomjs-prebuilt --save-dev
+  npm shrinkwrap
 fi
 
 rm -rf ./install
