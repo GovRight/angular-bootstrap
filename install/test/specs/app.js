@@ -1,7 +1,7 @@
 /* global describe, expect, it */
 'use strict';
 
-describe('Module and deps', function() {
+describe('Main app module and it\'s dependencies', function() {
   [
     'app',
     'govright.platformServices',
