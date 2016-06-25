@@ -2,7 +2,17 @@
   "name": "angular-bootstrap",
   "version": "1.1.0",
   "description": "A template to kick-start an AngularJS 1 app using GovRight Corpus backend",
-  "main": "setup.js",
+  "main": "./install/setup.js",
+  "contributors": [
+    {
+      "name": "Victor Miletsky",
+      "email": "victor@govright.org"
+    },
+    {
+      "name": "Heath Morrison",
+      "email": "heath@govright.org"
+    }
+  ],
   "engines": {
     "node": ">=5.4.0 <6.0.0"
   },
