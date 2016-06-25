@@ -34,7 +34,7 @@ module.exports = function(config) {
       maxLogLines: 3
     },
     jsonFixturesPreprocessor: {
-      stripPrefix: 'test/unit/fixtures/',
+      stripPrefix: 'test/fixtures/',
       camelizeFilenames: true
     },
     wiredep: {},
